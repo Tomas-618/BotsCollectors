@@ -2,14 +2,16 @@
 using UnityEngine;
 using Zenject;
 
-public class BotsBase : MonoBehaviour
+public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents
 {
     [SerializeField] private InterfaceReference<IReadOnlyResourcesSpawnerEvents, ResourcesSpawnerOnPlane> _events;
 
     private BotService[] _services;
     private int _currentServiceIndex;
     private int _resourcesCount;
-    
+
+    public event Action<int> ResourcesCountChanged;
+
     private void OnEnable() =>
         _events.Value.Spawned += SetResourcesTargetsToBot;
 
@@ -27,7 +29,7 @@ public class BotsBase : MonoBehaviour
         if (resource == null)
             throw new ArgumentNullException(nameof(resource));
 
-        _resourcesCount++;
+        ResourcesCountChanged?.Invoke(++_resourcesCount);
     }
 
     private void SetResourcesTargetsToBot(Resource[] resources)
