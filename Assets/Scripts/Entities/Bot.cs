@@ -13,7 +13,7 @@ public class Bot : MonoBehaviour
 
     public bool HasResources => _targetPoint.Count > 0;
 
-    public bool IsArrived => _agent.remainingDistance < _agent.stoppingDistance;
+    public bool IsArrived => _agent.remainingDistance <= _agent.stoppingDistance;
 
     private void Awake() =>
         _agent = GetComponent<NavMeshAgent>();
@@ -35,6 +35,9 @@ public class Bot : MonoBehaviour
 
     public void AddNewResourceTarget(Resource targetPoint) =>
         _targetPoint.Enqueue(targetPoint ?? throw new ArgumentNullException(nameof(targetPoint)));
+
+    public void ResetPath() =>
+        _agent.ResetPath();
 
     public void SetDestination(Vector3 destination) =>
         _agent.SetDestination(destination);
