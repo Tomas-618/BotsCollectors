@@ -13,7 +13,7 @@ public class Bot : MonoBehaviour
 
     public bool HasResources => _targetPoint.Count > 0;
 
-    public bool IsArrived => _agent.hasPath;
+    public bool IsArrived => _agent.remainingDistance < _agent.stoppingDistance;
 
     private void Awake() =>
         _agent = GetComponent<NavMeshAgent>();
