@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Zenject;
 
 public class ResourcePoolComponent : MonoBehaviour
 {
@@ -8,10 +7,9 @@ public class ResourcePoolComponent : MonoBehaviour
 
     private ResourcesPool _entity;
 
-    public void ReturnToPool() =>
-        _entity.GetIn(_resource);
-
-    [Inject]
-    private void Construct(ResourcesPool entity) =>
+    public void Init(ResourcesPool entity) =>
         _entity = entity ?? throw new ArgumentNullException(nameof(entity));
+
+    public void ReturnToPool() =>
+        _entity.PutEntityIn(_resource);
 }

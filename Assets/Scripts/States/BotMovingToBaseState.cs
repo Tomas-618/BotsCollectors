@@ -21,6 +21,12 @@ public class BotMovingToBaseState : BotState
         Entity.SetDestination(destination);
     }
 
-    public override void Exit() =>
+    public override void Exit()
+    {
         Entity.ResetPath();
+        Resource resource = Entity.TakeResource();
+
+        _base.ResieveResource(resource);
+        resource.GetComponent<ResourcePoolComponent>().ReturnToPool();
+    }
 }

@@ -22,9 +22,17 @@ public class BotsBase : MonoBehaviour
             service.Update();
     }
 
-    private void SetResourcesTargetsToBot(Resource[] entities)
+    public void ResieveResource(Resource resource)
     {
-        foreach (Resource entity in entities)
+        if (resource == null)
+            throw new ArgumentNullException(nameof(resource));
+
+        _resourcesCount++;
+    }
+
+    private void SetResourcesTargetsToBot(Resource[] resources)
+    {
+        foreach (Resource entity in resources)
         {
             int serviceIndex = UnityEngine.Random.Range(0, _services.Length);
 

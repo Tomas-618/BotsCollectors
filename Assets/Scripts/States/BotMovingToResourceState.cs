@@ -17,6 +17,9 @@ public class BotMovingToResourceState : BotState
         Entity.SetDestination(destination);
     }
 
-    public override void Exit() =>
+    public override void Exit()
+    {
         Entity.CollectResource();
+        Entity.HideCurrentResource();
+    }
 }

@@ -27,6 +27,9 @@ public class Bot : MonoBehaviour
         return resource;
     }
 
+    public void HideCurrentResource() =>
+        _resource.DisableObject();
+
     public void CollectResource() =>
         _resource = _targetPoint.Dequeue();
 
