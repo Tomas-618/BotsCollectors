@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(ResourcePoolComponent))]
-public class Resource : MonoBehaviour
+public class Resource : MonoBehaviour, ITarget
 {
+    [field: SerializeField] public ResourcePoolComponent PoolComponent { get; private set; }
+
+    public Transform TransformInfo { get; private set; }
+
+    private void Awake() =>
+        TransformInfo = transform;
+
     public void EnableObject() =>
-        gameObject.SetActive(true);
+    gameObject.SetActive(true);
 
     public void DisableObject() =>
         gameObject.SetActive(false);

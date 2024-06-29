@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5533919512225077812}
   - component: {fileID: 2023462402111643605}
   - component: {fileID: 3516326704291139089}
+  - component: {fileID: -3387247988928636414}
   - component: {fileID: 2302305634071231970}
   - component: {fileID: -1354202554655560510}
   m_Layer: 3
@@ -120,6 +121,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af47a9e4f3fcf547bcd345e9e7e8f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PoolComponent>k__BackingField: {fileID: 2302305634071231970}
+--- !u!114 &-3387247988928636414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3586296583604143478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8e4a673bbe3004daf8bdf837d44062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ResourceInfo>k__BackingField: {fileID: 3516326704291139089}
 --- !u!114 &2302305634071231970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c49931134a893a4ba52ab2a8902baf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resource: {fileID: 3516326704291139089}
+  _mediator: {fileID: -3387247988928636414}
 --- !u!208 &-1354202554655560510
 NavMeshObstacle:
   m_ObjectHideFlags: 0

@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 491964522}
   - component: {fileID: 491964521}
   - component: {fileID: 491964526}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Bot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.85
+  m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -247,7 +247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491964520}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.37, y: 1.25, z: 23.11}
+  m_LocalPosition: {x: -4.66, y: 1, z: -0.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc23d60c14a9d1498e78fb95482a0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _distanceToInterract: 1.5
 --- !u!1 &502791180
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 895898346}
   - component: {fileID: 895898347}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ResourcesBase
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -925,9 +926,10 @@ Transform:
   m_GameObject: {fileID: 895898345}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.25, z: 25}
-  m_LocalScale: {x: 15, y: 1, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1702919159}
   - {fileID: 1636601018}
   m_Father: {fileID: 617924753}
   m_RootOrder: -1
@@ -946,6 +948,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _events:
     _value: {fileID: 866962135}
+  _entities:
+  - {fileID: 491964526}
+  - {fileID: 1670934589}
+  - {fileID: 2121573544}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,14 +1138,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636601017}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.25, z: -2.5}
-  m_LocalScale: {x: 0.06666667, y: 1, z: 0.1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 491964525}
   - {fileID: 1670934588}
   - {fileID: 2121573543}
-  - {fileID: 1702919159}
   m_Father: {fileID: 895898346}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1157,7 +1162,7 @@ GameObject:
   - component: {fileID: 1670934591}
   - component: {fileID: 1670934590}
   - component: {fileID: 1670934589}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Bot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1172,7 +1177,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670934587}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 1.25, z: 22.88}
+  m_LocalPosition: {x: -0.07, y: 1, z: 1.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1191,6 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc23d60c14a9d1498e78fb95482a0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _distanceToInterract: 1.5
 --- !u!195 &1670934590
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1205,7 +1211,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.85
+  m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1395,11 +1401,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702919154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25000027, z: 25}
+  m_LocalPosition: {x: 0, y: -1.5000002, z: 0}
   m_LocalScale: {x: 15, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1636601018}
+  m_Father: {fileID: 895898346}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1702919161
@@ -1607,7 +1613,6 @@ GameObject:
   - component: {fileID: 1880156260}
   - component: {fileID: 1880156259}
   - component: {fileID: 1880156262}
-  - component: {fileID: 1880156263}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1643,7 +1648,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 1880156263}
   - {fileID: 1880156259}
   - {fileID: 1880156262}
   _installerPrefabs: []
@@ -1691,23 +1695,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxResourcesCount: 8
---- !u!114 &1880156263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1880156258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baefaf185c77ee24ebe6cca29ebbb5e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _entities:
-  - {fileID: 491964526}
-  - {fileID: 1670934589}
-  - {fileID: 2121573544}
-  _base: {fileID: 895898347}
 --- !u!1 &2121573542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,7 +1709,7 @@ GameObject:
   - component: {fileID: 2121573546}
   - component: {fileID: 2121573545}
   - component: {fileID: 2121573544}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Bot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1737,7 +1724,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121573542}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.23, y: 1.25, z: 24.91}
+  m_LocalPosition: {x: 4.58, y: 1, z: -0.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1756,6 +1743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc23d60c14a9d1498e78fb95482a0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _distanceToInterract: 1.5
 --- !u!195 &2121573545
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1770,7 +1758,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.85
+  m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

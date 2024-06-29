@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ResourcePoolComponent : MonoBehaviour
 {
-    [SerializeField] private Resource _resource;
+    [SerializeField] private ResourceMediator _mediator;
 
     private ResourcesPool _entity;
 
@@ -11,5 +11,5 @@ public class ResourcePoolComponent : MonoBehaviour
         _entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
     public void ReturnToPool() =>
-        _entity.PutEntityIn(_resource);
+        _entity.PutEntityIn(_mediator.ResourceInfo);
 }

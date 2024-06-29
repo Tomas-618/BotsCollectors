@@ -2,46 +2,81 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using BasicStateMachine;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Bot : MonoBehaviour
 {
-    private readonly Queue<Resource> _targetPoint = new Queue<Resource>();
+    private readonly Queue<ITarget> _targets = new Queue<ITarget>();
+    private readonly Queue<Resource> _resources = new Queue<Resource>();
+
+    [SerializeField, Min(0)] private float _distanceToInterract;
 
     private NavMeshAgent _agent;
-    private Resource _resource;
+    private StateMachine<BotState, BotTransition> _stateMachine;
 
-    public bool HasResources => _targetPoint.Count > 0;
+    public event Action<int> ResourceCollected;
 
-    public bool IsArrived => _agent.remainingDistance <= _agent.stoppingDistance;
+    public event Action<int> ResourcesPut;
 
-    private void Awake() =>
-        _agent = GetComponent<NavMeshAgent>();
+    public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;
 
-    public Resource TakeResource()
+    public bool HasTargets => _targets.Count > 0;
+
+    public bool IsNearestToTarget
     {
-        Resource resource = _resource;
+        get
+        {
+            if (CurrentTarget == null)
+                return true;
 
-        _resource = null;
-
-        return resource;
+            return Vector3.Distance(transform.position, CurrentTarget.TransformInfo.position) <= _distanceToInterract;
+        }
     }
 
-    public void HideCurrentResource() =>
-        _resource.DisableObject();
+    private void Awake()
+    {
+        BotStateMachineFactory stateMachineFactory = new BotStateMachineFactory(this);
 
-    public void CollectResource() =>
-        _resource = _targetPoint.Dequeue();
+        _agent = GetComponent<NavMeshAgent>();
+        _stateMachine = stateMachineFactory.Create();
+    }
 
-    public Vector3 GetCurrentTargetPoint() =>
-        _targetPoint.Peek().transform.position;
+    private void Update() =>
+        _stateMachine.Update();
 
-    public void AddNewResourceTarget(Resource targetPoint) =>
-        _targetPoint.Enqueue(targetPoint ?? throw new ArgumentNullException(nameof(targetPoint)));
+    public void Collect()
+    {
+        if ((CurrentTarget ?? throw new ArgumentNullException(nameof(CurrentTarget))) is Resource resource)
+        {
+            _targets.Dequeue();
+            _resources.Enqueue(resource);
+            resource.DisableObject();
+            ResourceCollected?.Invoke(1);
+        }
+    }
+
+    public void AddTarget(ITarget target) =>
+        _targets.Enqueue(target ?? throw new ArgumentNullException(nameof(target)));
+
+    public void Move()
+    {
+        if (CurrentTarget == null)
+            return;
+
+        _agent.SetDestination(CurrentTarget.TransformInfo.position);
+    }
 
     public void ResetPath() =>
         _agent.ResetPath();
 
-    public void SetDestination(Vector3 destination) =>
-        _agent.SetDestination(destination);
+    public void PutAllResources()
+    {
+        foreach (Resource resource in _resources)
+            (resource ?? throw new ArgumentNullException(nameof(resource))).PoolComponent.ReturnToPool();
+
+        ResourcesPut?.Invoke(_resources.Count);
+        _resources.Clear();
+        _targets.Dequeue();
+    }
 }

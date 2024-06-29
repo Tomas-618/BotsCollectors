@@ -1,48 +1,52 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
-public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents
+public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 {
     [SerializeField] private InterfaceReference<IReadOnlyResourcesSpawnerEvents, ResourcesSpawnerOnPlane> _events;
+    [SerializeField] private List<Bot> _entities;
 
-    private BotService[] _services;
-    private int _currentServiceIndex;
     private int _resourcesCount;
 
     public event Action<int> ResourcesCountChanged;
 
-    private void OnEnable() =>
-        _events.Value.Spawned += SetResourcesTargetsToBot;
+    public Transform TransformInfo { get; private set; }
 
-    private void OnDisable() =>
-        _events.Value.Spawned -= SetResourcesTargetsToBot;
+    private void Awake() =>
+        TransformInfo = transform;
 
-    private void Update()
+    private void OnEnable()
     {
-        foreach (BotService service in _services)
-            service.Update();
+        _events.Value.Spawned += SetResourcesTargetsToBot;
+        _entities.ForEach(entity => entity.ResourcesPut += AddResources);
     }
 
-    public void ResieveResource(Resource resource)
+    private void OnDisable()
     {
-        if (resource == null)
-            throw new ArgumentNullException(nameof(resource));
-
-        ResourcesCountChanged?.Invoke(++_resourcesCount);
+        _events.Value.Spawned -= SetResourcesTargetsToBot;
+        _entities.ForEach(entity => entity.ResourcesPut -= AddResources);
     }
 
     private void SetResourcesTargetsToBot(Resource[] resources)
     {
-        foreach (Resource entity in resources)
+        foreach (Resource resource in resources)
         {
-            int serviceIndex = UnityEngine.Random.Range(0, _services.Length);
+            int serviceIndex = UnityEngine.Random.Range(0, _entities.Count);
 
-            _services[serviceIndex].AddNewResourceTarget(entity);
+            _entities[serviceIndex].AddTarget(resource);
         }
+
+        _entities.ForEach(entity =>
+        {
+            if (entity.HasTargets)
+                entity.AddTarget(this);
+        });
     }
 
-    [Inject]
-    private void Construct(BotService[] services) =>
-        _services = services ?? throw new ArgumentNullException(nameof(services));
+    private void AddResources(int count)
+    {
+        _resourcesCount += count;
+        ResourcesCountChanged?.Invoke(_resourcesCount);
+    }
 }

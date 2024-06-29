@@ -41,14 +41,14 @@ public class ResourcesSpawnerOnPlane : MonoBehaviour, IReadOnlyResourcesSpawnerE
     {
         int randomCount = UnityEngine.Random.Range(_minCount, _pool.Count + 1);
 
-        Resource[] entities = _pool.GetEntityFrom(randomCount);
+        Resource[] entities = _pool.GetEntitiesFrom(randomCount);
 
         foreach (Resource entity in entities)
         {
-            if (entity == false)
+            if (entity == null)
                 continue;
 
-            entity.transform.localPosition = GetRandomPosition( _height);
+            entity.transform.localPosition = GetRandomPosition(_height);
         }
 
         Spawned?.Invoke(entities);
