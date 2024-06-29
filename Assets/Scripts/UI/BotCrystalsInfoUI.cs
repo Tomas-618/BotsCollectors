@@ -2,26 +2,13 @@ using System;
 using UnityEngine;
 using TMPro;
 
-public class BotCrystalsInfoUI : MonoBehaviour
+public class BotCrystalsInfoUI : BasicBotEventsHandler
 {
-    [SerializeField] private InterfaceReference<IReadOnlyBotsEvents, Bot> _botsEvents;
     [SerializeField] private TMP_Text _text;
 
     private int _count;
 
-    private void OnEnable()
-    {
-        _botsEvents.Value.ResourceCollected += OnCollect;
-        _botsEvents.Value.ResourcesPut += OnPut;
-    }
-
-    private void OnDisable()
-    {
-        _botsEvents.Value.ResourceCollected -= OnCollect;
-        _botsEvents.Value.ResourcesPut -= OnPut;
-    }
-
-    private void OnCollect(int count)
+    protected override void OnCollect(int count)
     {
         if (count < 0)
             throw new ArgumentOutOfRangeException(count.ToString());
@@ -29,7 +16,7 @@ public class BotCrystalsInfoUI : MonoBehaviour
         SetCount(_count + count);
     }
 
-    private void OnPut(int count)
+    protected override void OnPut(int count)
     {
         if (count < 0)
             throw new ArgumentOutOfRangeException(count.ToString());
