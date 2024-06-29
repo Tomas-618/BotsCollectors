@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using BasicStateMachine;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class Bot : MonoBehaviour
+[SelectionBase, RequireComponent(typeof(NavMeshAgent))]
+public class Bot : MonoBehaviour, IReadOnlyBotsEvents
 {
     private readonly Queue<ITarget> _targets = new Queue<ITarget>();
     private readonly Queue<Resource> _resources = new Queue<Resource>();
