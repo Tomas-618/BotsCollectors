@@ -13,6 +13,6 @@ public abstract class MonoBehavioursFabric<T> : IFabric<T> where T : MonoBehavio
         _parent = parent ?? throw new ArgumentNullException(nameof(parent));
     }
 
-    public T Create() =>
+    public virtual T Create() =>
         Instantiate(_prefab, _parent);
 }
