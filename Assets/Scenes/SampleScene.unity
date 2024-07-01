@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef98436ef838b048b542d33c13de8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceDelta: 5
+  _distanceDelta: 0.05
   _rotationDelta: 5
 --- !u!4 &1146318251122694191
 Transform:
@@ -1714,7 +1714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef98436ef838b048b542d33c13de8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceDelta: 5
+  _distanceDelta: 0.05
   _rotationDelta: 5
 --- !u!54 &1786597293546272854
 Rigidbody:
@@ -1922,7 +1922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef98436ef838b048b542d33c13de8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceDelta: 5
+  _distanceDelta: 0.05
   _rotationDelta: 5
 --- !u!4 &3139806756164976451
 Transform:

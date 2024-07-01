@@ -44,6 +44,7 @@ public class BotHand : MonoBehaviour, IReadOnlyBotHandEvents
 
         Resource resource = _resource;
 
+        _resource.RigidbodyInfo.isKinematic = true;
         _resource.Physics.Disable();
         _fixedJoint.connectedBody = null;
         _resource = null;
@@ -57,15 +58,19 @@ public class BotHand : MonoBehaviour, IReadOnlyBotHandEvents
     {
         Transform resourceTransform = _resource.transform;
 
-        while (resourceTransform.position != _transform.position || resourceTransform.rotation != _transform.rotation)
+        float minPositionDelta = 0.05f;
+        float minRotationAngle = 0.3f;
+
+        while (Vector3.Distance(resourceTransform.position, _transform.position) > minPositionDelta
+            || Quaternion.Angle(resourceTransform.rotation, _transform.rotation) > minRotationAngle)
         {
             resourceTransform.position = Vector3.MoveTowards(resourceTransform.position,
                 _transform.position,
-                distanceDelta * Time.deltaTime);
+                distanceDelta);
 
             resourceTransform.rotation = Quaternion.RotateTowards(resourceTransform.rotation,
                 _transform.rotation,
-                rotationDelta * Time.deltaTime);
+                rotationDelta);
 
             yield return null;
         }
