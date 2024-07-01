@@ -10,7 +10,7 @@ public class ResourcesFabric : MonoBehavioursFabric<Resource>
 
         Resource entity = base.Create();
 
-        entity.transform.rotation = Quaternion.Euler(Vector3.up * Random.Range(0, MaxAngle));
+        entity.Physics.transform.rotation = Quaternion.Euler(Vector3.up * Random.Range(0, MaxAngle));
 
         return entity;
     }

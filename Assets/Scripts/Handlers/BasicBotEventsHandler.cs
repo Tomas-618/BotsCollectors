@@ -16,7 +16,7 @@ public abstract class BasicBotEventsHandler : MonoBehaviour
         _events.Value.ResourcesPut -= OnPut;
     }
 
-    protected abstract void OnCollect(int count);
+    protected abstract void OnCollect();
 
-    protected abstract void OnPut(int count);
+    protected abstract void OnPut();
 }

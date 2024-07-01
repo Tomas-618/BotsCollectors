@@ -8,16 +8,17 @@ using BasicStateMachine;
 public class Bot : MonoBehaviour, IReadOnlyBotsEvents
 {
     private readonly Queue<ITarget> _targets = new Queue<ITarget>();
-    private readonly Queue<Resource> _resources = new Queue<Resource>();
 
     [SerializeField, Min(0)] private float _distanceToInterract;
 
-    private NavMeshAgent _agent;
+    [SerializeField] private BotHand _hand;
+
     private StateMachine<BotState, BotTransition> _stateMachine;
+    private NavMeshAgent _agent;
 
-    public event Action<int> ResourceCollected;
+    public event Action ResourceCollected;
 
-    public event Action<int> ResourcesPut;
+    public event Action ResourcesPut;
 
     public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;
 
@@ -50,9 +51,8 @@ public class Bot : MonoBehaviour, IReadOnlyBotsEvents
         if ((CurrentTarget ?? throw new ArgumentNullException(nameof(CurrentTarget))) is Resource resource)
         {
             _targets.Dequeue();
-            _resources.Enqueue(resource);
-            resource.DisableObject();
-            ResourceCollected?.Invoke(1);
+            _hand.Take(resource);
+            ResourceCollected?.Invoke();
         }
     }
 
@@ -70,13 +70,14 @@ public class Bot : MonoBehaviour, IReadOnlyBotsEvents
     public void ResetPath() =>
         _agent.ResetPath();
 
-    public void PutAllResources()
+    public void PutResource()
     {
-        foreach (Resource resource in _resources)
-            (resource ?? throw new ArgumentNullException(nameof(resource))).PoolComponent.ReturnToPool();
+        Resource resource = _hand.Throw();
 
-        ResourcesPut?.Invoke(_resources.Count);
-        _resources.Clear();
+        (resource != null ? resource : throw new ArgumentNullException(nameof(resource))).PoolComponent
+            .ReturnToPool();
+
+        ResourcesPut?.Invoke();
         _targets.Dequeue();
     }
 }

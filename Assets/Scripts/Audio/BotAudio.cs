@@ -13,10 +13,10 @@ public class BotAudio : BasicBotEventsHandler
     private void Awake() =>
         _source = GetComponent<AudioSource>();
 
-    protected override void OnCollect(int count) =>
+    protected override void OnCollect() =>
         Play(_collectedClip, _volume);
 
-    protected override void OnPut(int count) =>
+    protected override void OnPut() =>
         Play(_putClip, _volume);
 
     private void Play(AudioClip clip, in float volume) =>

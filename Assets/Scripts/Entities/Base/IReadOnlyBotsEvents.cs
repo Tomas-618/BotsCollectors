@@ -2,7 +2,7 @@
 
 public interface IReadOnlyBotsEvents
 {
-    event Action<int> ResourceCollected;
+    event Action ResourceCollected;
 
-    event Action<int> ResourcesPut;
+    event Action ResourcesPut;
 }

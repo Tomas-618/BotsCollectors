@@ -1,35 +1,17 @@
-using System;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class BotCrystalsInfoUI : BasicBotEventsHandler
 {
-    [SerializeField] private TMP_Text _text;
+    private Image _image;
 
-    private int _count;
+    private void Awake() =>
+        _image = GetComponent<Image>();
 
-    protected override void OnCollect(int count)
-    {
-        if (count < 0)
-            throw new ArgumentOutOfRangeException(count.ToString());
+    protected override void OnCollect() =>
+        _image.enabled = true;
 
-        SetCount(_count + count);
-    }
-
-    protected override void OnPut(int count)
-    {
-        if (count < 0)
-            throw new ArgumentOutOfRangeException(count.ToString());
-
-        SetCount(_count - count);
-    }
-
-    private void SetCount(int count)
-    {
-        _count = Mathf.Clamp(count, 0, int.MaxValue);
-        ChangeText(_count);
-    }
-
-    private void ChangeText(int count) =>
-        _text.text = count.ToString();
+    protected override void OnPut() =>
+        _image.enabled = false;
 }

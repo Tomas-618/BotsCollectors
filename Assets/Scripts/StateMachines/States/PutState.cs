@@ -5,6 +5,6 @@
     public override void Enter()
     {
         base.Enter();
-        BotInfo.PutAllResources();
+        BotInfo.PutResource();
     }
 }

@@ -19,34 +19,26 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     private void OnEnable()
     {
         _events.Value.Spawned += SetResourcesTargetsToBot;
-        _entities.ForEach(entity => entity.ResourcesPut += AddResources);
+        _entities.ForEach(entity => entity.ResourcesPut += AddResource);
     }
 
     private void OnDisable()
     {
         _events.Value.Spawned -= SetResourcesTargetsToBot;
-        _entities.ForEach(entity => entity.ResourcesPut -= AddResources);
+        _entities.ForEach(entity => entity.ResourcesPut -= AddResource);
     }
 
     private void SetResourcesTargetsToBot(Resource[] resources)
     {
-        foreach (Resource resource in resources)
+        for (int i = 0; i < resources.Length; i++)
         {
-            int serviceIndex = UnityEngine.Random.Range(0, _entities.Count);
+            int currentEntityIndex = i % _entities.Count;
 
-            _entities[serviceIndex].AddTarget(resource);
+            _entities[currentEntityIndex].AddTarget(resources[i]);
+            _entities[currentEntityIndex].AddTarget(this);
         }
-
-        _entities.ForEach(entity =>
-        {
-            if (entity.HasTargets)
-                entity.AddTarget(this);
-        });
     }
 
-    private void AddResources(int count)
-    {
-        _resourcesCount += count;
-        ResourcesCountChanged?.Invoke(_resourcesCount);
-    }
+    private void AddResource() =>
+        ResourcesCountChanged?.Invoke(++_resourcesCount);
 }
