@@ -19,13 +19,13 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     private void OnEnable()
     {
         _events.Value.Spawned += SetResourcesTargetsToBot;
-        _entities.ForEach(entity => entity.ResourcesPut += AddResource);
+        _entities.ForEach(entity => entity.HandEvents.ResourceThrew += AddResource);
     }
 
     private void OnDisable()
     {
         _events.Value.Spawned -= SetResourcesTargetsToBot;
-        _entities.ForEach(entity => entity.ResourcesPut -= AddResource);
+        _entities.ForEach(entity => entity.HandEvents.ResourceThrew -= AddResource);
     }
 
     private void SetResourcesTargetsToBot(Resource[] resources)

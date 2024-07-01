@@ -2,18 +2,18 @@
 
 public abstract class BasicBotEventsHandler : MonoBehaviour
 {
-    [SerializeField] private InterfaceReference<IReadOnlyBotsEvents, Bot> _events;
+    [SerializeField] private InterfaceReference<IReadOnlyBotHandEvents, BotHand> _handEvents;
 
     private void OnEnable()
     {
-        _events.Value.ResourceCollected += OnCollect;
-        _events.Value.ResourcesPut += OnPut;
+        _handEvents.Value.ResourceTaken += OnCollect;
+        _handEvents.Value.ResourceThrew += OnPut;
     }
 
     private void OnDisable()
     {
-        _events.Value.ResourceCollected -= OnCollect;
-        _events.Value.ResourcesPut -= OnPut;
+        _handEvents.Value.ResourceTaken -= OnCollect;
+        _handEvents.Value.ResourceThrew -= OnPut;
     }
 
     protected abstract void OnCollect();

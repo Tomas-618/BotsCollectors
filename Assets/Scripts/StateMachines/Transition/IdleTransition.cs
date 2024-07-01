@@ -2,14 +2,14 @@
 {
     public IdleTransition(BotState nextState, Bot bot) : base(nextState, bot)
     {
-        BotInfo.ResourceCollected += Open;
-        BotInfo.ResourcesPut += Open;
+        BotInfo.HandEvents.ResourceTaken += Open;
+        BotInfo.HandEvents.ResourceThrew += Open;
     }
 
     public void Dispose()
     {
-        BotInfo.ResourceCollected -= Open;
-        BotInfo.ResourcesPut -= Open;
+        BotInfo.HandEvents.ResourceTaken -= Open;
+        BotInfo.HandEvents.ResourceThrew -= Open;
     }
 
     private void Open(int count) =>

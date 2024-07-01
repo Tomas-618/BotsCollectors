@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6f008f80c62e94d980cf684459a39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _events:
-    _value: {fileID: 7877666353430000406}
+  _handEvents:
+    _value: {fileID: 1656906235794084822}
 --- !u!1 &2724136635108209474
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,8 +651,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42ab2638352c9d498b5a9f2a83863c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _events:
-    _value: {fileID: 7877666353430000406}
+  _handEvents:
+    _value: {fileID: 1656906235794084822}
   _volume: 1
   _collectedClip: {fileID: 8300000, guid: 564d89f0123fe9845ab2369adb39788c, type: 3}
   _putClip: {fileID: 8300000, guid: c4f65f6ef9ca1f543983f4c82ef19cfc, type: 3}

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(FixedJoint))]
-public class BotHand : MonoBehaviour
+public class BotHand : MonoBehaviour, IReadOnlyBotHandEvents
 {
     [SerializeField, Min(0)] private float _distanceDelta;
     [SerializeField, Min(0)] private float _rotationDelta;
@@ -12,6 +12,10 @@ public class BotHand : MonoBehaviour
     private FixedJoint _fixedJoint;
     private Resource _resource;
     private Coroutine _coroutine;
+
+    public event Action ResourceTaken;
+
+    public event Action ResourceThrew;
 
     private void Awake()
     {
@@ -44,6 +48,8 @@ public class BotHand : MonoBehaviour
         _fixedJoint.connectedBody = null;
         _resource = null;
 
+        ResourceThrew?.Invoke();
+
         return resource;
     }
 
@@ -53,14 +59,21 @@ public class BotHand : MonoBehaviour
 
         while (resourceTransform.position != _transform.position || resourceTransform.rotation != _transform.rotation)
         {
-            resourceTransform.position = Vector3.MoveTowards(resourceTransform.position, _transform.position, distanceDelta);
-            resourceTransform.rotation = Quaternion.RotateTowards(resourceTransform.rotation, _transform.rotation, rotationDelta);
+            resourceTransform.position = Vector3.MoveTowards(resourceTransform.position,
+                _transform.position,
+                distanceDelta * Time.deltaTime);
+
+            resourceTransform.rotation = Quaternion.RotateTowards(resourceTransform.rotation,
+                _transform.rotation,
+                rotationDelta * Time.deltaTime);
 
             yield return null;
         }
 
         _fixedJoint.connectedBody = _resource.RigidbodyInfo;
         _resource.RigidbodyInfo.isKinematic = false;
+
+        ResourceTaken?.Invoke();
         _coroutine = null;
     }
 }

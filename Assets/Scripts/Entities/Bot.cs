@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using BasicStateMachine;
 
 [SelectionBase, RequireComponent(typeof(NavMeshAgent))]
-public class Bot : MonoBehaviour, IReadOnlyBotsEvents
+public class Bot : MonoBehaviour, IReadOnlyBot
 {
     private readonly Queue<ITarget> _targets = new Queue<ITarget>();
 
@@ -16,9 +16,7 @@ public class Bot : MonoBehaviour, IReadOnlyBotsEvents
     private StateMachine<BotState, BotTransition> _stateMachine;
     private NavMeshAgent _agent;
 
-    public event Action ResourceCollected;
-
-    public event Action ResourcesPut;
+    public IReadOnlyBotHandEvents HandEvents => _hand;
 
     public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;
 
@@ -52,7 +50,6 @@ public class Bot : MonoBehaviour, IReadOnlyBotsEvents
         {
             _targets.Dequeue();
             _hand.Take(resource);
-            ResourceCollected?.Invoke();
         }
     }
 
@@ -77,7 +74,6 @@ public class Bot : MonoBehaviour, IReadOnlyBotsEvents
         (resource != null ? resource : throw new ArgumentNullException(nameof(resource))).PoolComponent
             .ReturnToPool();
 
-        ResourcesPut?.Invoke();
         _targets.Dequeue();
     }
 }
