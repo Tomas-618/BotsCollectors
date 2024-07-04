@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TransformLooker : MonoBehaviour
@@ -11,4 +12,7 @@ public class TransformLooker : MonoBehaviour
 
     private void LateUpdate() =>
         _transform.LookAt(_target.position);
+
+    public void Init(Transform target) =>
+        _target = target != null ? target : throw new ArgumentNullException(nameof(target));
 }

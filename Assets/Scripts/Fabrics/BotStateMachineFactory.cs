@@ -1,7 +1,7 @@
 ﻿using System;
 using BasicStateMachine;
 
-public class BotStateMachineFactory : IFabric<StateMachine<BotState, BotTransition>>
+public class BotStateMachineFactory
 {
     private readonly Bot _bot;
 

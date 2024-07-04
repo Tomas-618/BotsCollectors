@@ -198,7 +198,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &6256781140461567680
 MonoBehaviour:
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distanceDelta: 0.05
-  _rotationDelta: 0.05
+  _rotationDelta: 5
 --- !u!1 &5855961446708253455
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distanceToInterract: 1.5
   _hand: {fileID: 1656906235794084822}
+  <UILooker>k__BackingField: {fileID: 5382544105055625760}
 --- !u!1 &6252279534951987511
 GameObject:
   m_ObjectHideFlags: 0

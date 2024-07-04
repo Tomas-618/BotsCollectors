@@ -23,6 +23,7 @@ public class Resource : MonoBehaviour, ITarget
     public void DisableObject()
     {
         TransformInfo.rotation = Quaternion.identity;
+        Physics.transform.localPosition = Vector3.zero;
         gameObject.SetActive(false);
     }
 

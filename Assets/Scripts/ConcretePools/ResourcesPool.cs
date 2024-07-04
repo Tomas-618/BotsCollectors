@@ -1,13 +1,16 @@
 using System;
 using Pool;
+using UnityEngine;
 
 public class ResourcesPool
 {
     private readonly ObjectsPool<Resource> _entities;
 
-    public ResourcesPool(ResourcesFabric fabric, int count)
+    public ResourcesPool(ResourcesFactory fabric, Transform parent, int count)
     {
-        _entities = new ObjectsPool<Resource>((fabric ?? throw new ArgumentNullException(nameof(fabric))).Create, count);
+        _entities = new ObjectsPool<Resource>(() => (fabric ?? throw new ArgumentNullException(nameof(fabric))).Create(parent),
+            count);
+
         Count = count;
 
         foreach (Resource entity in _entities.AllEntities)

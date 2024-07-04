@@ -16,6 +16,8 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     private StateMachine<BotState, BotTransition> _stateMachine;
     private NavMeshAgent _agent;
 
+    [field: SerializeField] public TransformLooker UILooker { get; private set; }
+
     public IReadOnlyBotHandEvents HandEvents => _hand;
 
     public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;

@@ -48,7 +48,7 @@ public class ResourcesSpawnerOnPlane : MonoBehaviour, IReadOnlyResourcesSpawnerE
             if (entity == null)
                 continue;
 
-            entity.transform.localPosition = GetRandomPosition(_height);
+            entity.transform.position = GetRandomPosition(_height);
         }
 
         Spawned?.Invoke(entities);
@@ -59,6 +59,7 @@ public class ResourcesSpawnerOnPlane : MonoBehaviour, IReadOnlyResourcesSpawnerE
         Vector3 randomPosition = _collider.GetRandomPosition();
 
         randomPosition.y = 0;
+
         Vector3 resultPosition = randomPosition + Vector3.up * height;
 
         return resultPosition;
