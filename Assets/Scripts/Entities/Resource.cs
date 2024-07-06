@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Resource : MonoBehaviour, ITarget
+public class Resource : BasicGameObject, ITarget
 {
     [field: SerializeField] public ResourcePoolComponent PoolComponent { get; private set; }
 
@@ -17,16 +17,10 @@ public class Resource : MonoBehaviour, ITarget
         RigidbodyInfo = GetComponent<Rigidbody>();
     }
 
-    public void EnableObject() =>
-    gameObject.SetActive(true);
-
-    public void DisableObject()
+    public override void DisableObject()
     {
         TransformInfo.rotation = Quaternion.identity;
         Physics.transform.localPosition = Vector3.zero;
-        gameObject.SetActive(false);
+        base.DisableObject();
     }
-
-    public void Destroy() =>
-        Destroy(gameObject);
 }

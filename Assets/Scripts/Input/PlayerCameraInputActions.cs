@@ -55,7 +55,7 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Choose"",
+                    ""name"": ""Click"",
                     ""type"": ""Button"",
                     ""id"": ""08eec534-7b07-40bc-8b14-b9c24470697a"",
                     ""expectedControlType"": ""Button"",
@@ -149,7 +149,7 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardAndMouse"",
-                    ""action"": ""Choose"",
+                    ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -180,7 +180,7 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
         m_PlayerCamera_Zoom = m_PlayerCamera.FindAction("Zoom", throwIfNotFound: true);
         m_PlayerCamera_Move = m_PlayerCamera.FindAction("Move", throwIfNotFound: true);
         m_PlayerCamera_Rotate = m_PlayerCamera.FindAction("Rotate", throwIfNotFound: true);
-        m_PlayerCamera_Choose = m_PlayerCamera.FindAction("Choose", throwIfNotFound: true);
+        m_PlayerCamera_Click = m_PlayerCamera.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -245,7 +245,7 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
     private readonly InputAction m_PlayerCamera_Zoom;
     private readonly InputAction m_PlayerCamera_Move;
     private readonly InputAction m_PlayerCamera_Rotate;
-    private readonly InputAction m_PlayerCamera_Choose;
+    private readonly InputAction m_PlayerCamera_Click;
     public struct PlayerCameraActions
     {
         private @PlayerCameraInputActions m_Wrapper;
@@ -253,7 +253,7 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
         public InputAction @Zoom => m_Wrapper.m_PlayerCamera_Zoom;
         public InputAction @Move => m_Wrapper.m_PlayerCamera_Move;
         public InputAction @Rotate => m_Wrapper.m_PlayerCamera_Rotate;
-        public InputAction @Choose => m_Wrapper.m_PlayerCamera_Choose;
+        public InputAction @Click => m_Wrapper.m_PlayerCamera_Click;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -272,9 +272,9 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
-            @Choose.started += instance.OnChoose;
-            @Choose.performed += instance.OnChoose;
-            @Choose.canceled += instance.OnChoose;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
         }
 
         private void UnregisterCallbacks(IPlayerCameraActions instance)
@@ -288,9 +288,9 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
-            @Choose.started -= instance.OnChoose;
-            @Choose.performed -= instance.OnChoose;
-            @Choose.canceled -= instance.OnChoose;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
         }
 
         public void RemoveCallbacks(IPlayerCameraActions instance)
@@ -322,6 +322,6 @@ public partial class @PlayerCameraInputActions: IInputActionCollection2, IDispos
         void OnZoom(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
-        void OnChoose(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
 }

@@ -62,5 +62,5 @@ public class ResourcesPool
         resource.EnableObject();
 
     private void Destroy(Resource resource) =>
-        resource.Destroy();
+        resource.DestroyObject();
 }

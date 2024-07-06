@@ -33,7 +33,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Choose",
+                    "name": "Click",
                     "type": "Button",
                     "id": "08eec534-7b07-40bc-8b14-b9c24470697a",
                     "expectedControlType": "Button",
@@ -127,7 +127,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardAndMouse",
-                    "action": "Choose",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -2,16 +2,13 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(MeshCollider))]
-public class ResourcesSpawnerOnPlane : MonoBehaviour, IReadOnlyResourcesSpawnerEvents
+[RequireComponent(typeof(BoxCollider))]
+public class ResourcesSpawnerOnPlane : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyResourcesSpawnerEvents
 {
     [SerializeField, Min(0)] private int _minCount;
     [SerializeField, Min(0)] private float _minDelay;
     [SerializeField, Min(0)] private float _maxDelay;
 
-    [SerializeField] private float _height;
-
-    private MeshCollider _collider;
     private ResourcesPool _pool;
 
     public event Action<Resource[]> Spawned;
@@ -21,9 +18,6 @@ public class ResourcesSpawnerOnPlane : MonoBehaviour, IReadOnlyResourcesSpawnerE
         if (_minDelay >= _maxDelay)
             _minDelay = _maxDelay - 1;
     }
-
-    private void Awake() =>
-        _collider = GetComponent<MeshCollider>();
 
     private void OnEnable() =>
         _pool.StoredAllEntities += StartSpawning;
@@ -48,21 +42,10 @@ public class ResourcesSpawnerOnPlane : MonoBehaviour, IReadOnlyResourcesSpawnerE
             if (entity == null)
                 continue;
 
-            entity.transform.position = GetRandomPosition(_height);
+            entity.transform.position = GetRandomPosition();
         }
 
         Spawned?.Invoke(entities);
-    }
-
-    private Vector3 GetRandomPosition(float height)
-    {
-        Vector3 randomPosition = _collider.GetRandomPosition();
-
-        randomPosition.y = 0;
-
-        Vector3 resultPosition = randomPosition + Vector3.up * height;
-
-        return resultPosition;
     }
 
     [Inject]

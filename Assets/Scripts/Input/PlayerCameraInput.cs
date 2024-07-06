@@ -16,7 +16,7 @@ public class PlayerCameraInput
         _actions.PlayerCamera.Zoom.performed += OnZoom;
         _actions.PlayerCamera.Move.performed += OnMove;
         _actions.PlayerCamera.Rotate.performed += OnRotate;
-        _actions.PlayerCamera.Choose.performed += OnChoose;
+        _actions.PlayerCamera.Click.performed += OnChoose;
     }
 
     public event Action<Vector3> Zoomed;
@@ -25,7 +25,7 @@ public class PlayerCameraInput
 
     public event Action<Vector3> Rotated;
 
-    public event Action Chose;
+    public event Action Clicked;
 
     public static PlayerCameraInput Instance
     {
@@ -43,7 +43,7 @@ public class PlayerCameraInput
         _actions.PlayerCamera.Zoom.performed -= OnZoom;
         _actions.PlayerCamera.Move.performed -= OnMove;
         _actions.PlayerCamera.Rotate.performed -= OnRotate;
-        _actions.PlayerCamera.Choose.performed -= OnChoose;
+        _actions.PlayerCamera.Click.performed -= OnChoose;
     }
 
     private void OnZoom(CallbackContext context)
@@ -68,5 +68,5 @@ public class PlayerCameraInput
     }
 
     private void OnChoose(CallbackContext context) =>
-        Chose?.Invoke();
+        Clicked?.Invoke();
 }

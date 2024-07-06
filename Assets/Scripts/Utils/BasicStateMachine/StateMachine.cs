@@ -17,8 +17,8 @@ namespace BasicStateMachine
 
         public void Update()
         {
-            GetNextState();
             _currentState.Update();
+            GetNextState();
         }
 
         private void GetNextState()

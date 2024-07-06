@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BotAudio : BasicBotEventsHandler
 {
-    [Range(0, 1), SerializeField] private float _volume;
+    [SerializeField, Range(0, 1)] private float _volume;
     
     [SerializeField] private AudioClip _collectedClip;
     [SerializeField] private AudioClip _putClip;

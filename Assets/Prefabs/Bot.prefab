@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5304379, g: 0.5487428, b: 0.754717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -362,6 +362,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6148788100667444960}
+  - {fileID: 5721901092780272763}
   - {fileID: 3501133118279767343}
   - {fileID: 2743976017924387920}
   - {fileID: 784010002637431313}
@@ -657,3 +658,69 @@ MonoBehaviour:
   _volume: 1
   _collectedClip: {fileID: 8300000, guid: 564d89f0123fe9845ab2369adb39788c, type: 3}
   _putClip: {fileID: 8300000, guid: c4f65f6ef9ca1f543983f4c82ef19cfc, type: 3}
+--- !u!1001 &4404594988378601053
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6961616052788897496}
+    m_Modifications:
+    - target: {fileID: 8046225700519066976, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_Name
+      value: SprinklesEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+--- !u!4 &5721901092780272763 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8234837916414892582, guid: 2b7b9dc5b12ca844fa266f16fee5c203, type: 3}
+  m_PrefabInstance: {fileID: 4404594988378601053}
+  m_PrefabAsset: {fileID: 0}

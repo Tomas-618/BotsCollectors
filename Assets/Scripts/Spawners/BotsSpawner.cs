@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(BoxCollider))]
-public class BotsSpawner : MonoBehaviour, IReadOnlyBotsSpawner
+public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpawner
 {
     [SerializeField, Min(0)] private int _resourcesCountToSpawn;
 
@@ -12,7 +12,6 @@ public class BotsSpawner : MonoBehaviour, IReadOnlyBotsSpawner
     [SerializeField] private InteractableButton _button;
 
     private BotsFactory _fabric;
-    private BoxCollider _collider;
 
     public int ResourcesCountToSpawn => _resourcesCountToSpawn;
 
@@ -20,9 +19,6 @@ public class BotsSpawner : MonoBehaviour, IReadOnlyBotsSpawner
 
     private void Reset() =>
         _resourcesCountToSpawn = 3;
-
-    private void Awake() =>
-        _collider = GetComponent<BoxCollider>();
 
     private void OnEnable() =>
         _button.Clicked += Spawn;
@@ -41,15 +37,6 @@ public class BotsSpawner : MonoBehaviour, IReadOnlyBotsSpawner
         _base.AddNewEntity(entity);
 
         entity.transform.position = GetRandomPosition();
-    }
-
-    private Vector3 GetRandomPosition()
-    {
-        Vector3 randomPosition = _collider.GetRandomPosition();
-
-        randomPosition.y = 0;
-
-        return randomPosition;
     }
 
     [Inject]
