@@ -1901,6 +1901,8 @@ GameObject:
   - component: {fileID: 2080841356971881389}
   - component: {fileID: 6439372643910627932}
   - component: {fileID: 351852266266454861}
+  - component: {fileID: 3545420983788403961}
+  - component: {fileID: 6473139336173447413}
   - component: {fileID: 5185374312548201055}
   m_Layer: 6
   m_Name: SpawnGround
@@ -2045,6 +2047,33 @@ MonoBehaviour:
   _base: {fileID: 7400177017344075382}
   _parent: {fileID: 1824557824757719233}
   _button: {fileID: 6786666161730962878}
+--- !u!114 &3545420983788403961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5726199639674030783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc9245e2e2e089468ddda9bf3f42403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <FlagInfo>k__BackingField: {fileID: 4884728464239606446}
+--- !u!114 &6473139336173447413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5726199639674030783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb85973aaae56741a1e18b6d9b053a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _events:
+    _value: {fileID: 3545420983788403961}
 --- !u!114 &5185374312548201055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3310,7 +3339,6 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4626506935665057623, guid: 8813d2b606d5c5d40b55784903a3b702, type: 3}
   - {fileID: 2100000, guid: c2e4eec0e9bc7c14dbd323d8dad59f74, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
