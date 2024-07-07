@@ -2,9 +2,9 @@
 
 public class BaseSelectionFlagPlacementState : BaseSelectionState
 {
-    private readonly SelectableBase _base;
+    private readonly ICanOnlyChangeSelectableBaseState _base;
 
-    public BaseSelectionFlagPlacementState(SelectableBase @base) =>
+    public BaseSelectionFlagPlacementState(ICanOnlyChangeSelectableBaseState @base) =>
         _base = @base != null ? @base : throw new ArgumentNullException(nameof(@base));
 
     public override void Enter()

@@ -3,10 +3,10 @@
 public class BaseSelectionFlagPlacementTransition : BaseSelectionTransition
 {
     private readonly RaycasterHitInfoProvider _hitInfoProvider;
-    private readonly SelectableBase _base;
+    private readonly ISelectableBase _base;
 
     public BaseSelectionFlagPlacementTransition(BaseSelectionState nextState,
-        RaycasterHitInfoProvider hitInfoProvider, SelectableBase @base) : base(nextState)
+        RaycasterHitInfoProvider hitInfoProvider, ISelectableBase @base) : base(nextState)
     {
         _hitInfoProvider = hitInfoProvider ?? throw new ArgumentNullException(nameof(hitInfoProvider));
         _base = @base != null ? @base : throw new ArgumentNullException(nameof(@base));
@@ -14,7 +14,7 @@ public class BaseSelectionFlagPlacementTransition : BaseSelectionTransition
 
     public override void Update()
     {
-        if (_hitInfoProvider.HasHit == false || _hitInfoProvider.HitInfo.transform.TryGetComponent(out SelectableBase @base) == false)
+        if (_hitInfoProvider.HasHit == false || _hitInfoProvider.HitInfo.transform.TryGetComponent(out ISelectableBase @base) == false)
             return;
 
         if (_base == @base)
