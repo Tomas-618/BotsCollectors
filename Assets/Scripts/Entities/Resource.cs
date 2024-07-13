@@ -17,10 +17,9 @@ public class Resource : BasicGameObject, ITarget
         RigidbodyInfo = GetComponent<Rigidbody>();
     }
 
-    public override void DisableObject()
+    private void OnDisable()
     {
         TransformInfo.rotation = Quaternion.identity;
         Physics.transform.localPosition = Vector3.zero;
-        base.DisableObject();
     }
 }

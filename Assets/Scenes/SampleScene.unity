@@ -1242,7 +1242,7 @@ PrefabInstance:
       value: ResourcesBase
       objectReference: {fileID: 0}
     - target: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: _events._value
+      propertyPath: _spawnerEvents._value
       value: 
       objectReference: {fileID: 866962135}
     - target: {fileID: 7479693398491181826, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}

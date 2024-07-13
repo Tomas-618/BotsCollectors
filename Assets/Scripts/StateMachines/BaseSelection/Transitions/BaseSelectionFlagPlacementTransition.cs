@@ -17,7 +17,7 @@ public class BaseSelectionFlagPlacementTransition : BaseSelectionTransition
         if (_hitInfoProvider.HasHit == false || _hitInfoProvider.HitInfo.transform.TryGetComponent(out ISelectableBase @base) == false)
             return;
 
-        if (_base == @base)
+        if (_base == @base && _base.IsEnabled)
             Open();
     }
 }

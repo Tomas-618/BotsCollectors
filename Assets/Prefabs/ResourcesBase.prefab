@@ -1362,12 +1362,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxEntitiesCount: 8
-  _events:
+  _spawnerEvents:
     _value: {fileID: 0}
   _entities:
   - {fileID: 1261451076974981197}
   - {fileID: 5697024864860857400}
   - {fileID: 4907724807557106573}
+  _selectableBase: {fileID: 3545420983788403961}
+  _flag: {fileID: 4884728464239606446}
+  _minEntitiesCount: 1
+  <ResourcesCountToCreateNew>k__BackingField: 5
 --- !u!1 &5094704507083757705
 GameObject:
   m_ObjectHideFlags: 0

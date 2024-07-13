@@ -10,6 +10,10 @@ public class SelectableBase : MonoBehaviour, ICanOnlyChangeSelectableBaseState,
 
     [field: SerializeField] public Flag FlagInfo { get; private set; }
 
+    public bool IsEnabled => enabled;
+
+    private void Start() { }
+
     public void ChangeState()
     {
         _isSelected = !_isSelected;

@@ -4,12 +4,16 @@
     {
         BotInfo.HandEvents.ResourceTaken += Open;
         BotInfo.HandEvents.ResourceThrew += Open;
+        BotInfo.CollectedResourcesFromBase += Open;
+        BotInfo.BaseBuilt += Open;
     }
 
     public void Dispose()
     {
         BotInfo.HandEvents.ResourceTaken -= Open;
         BotInfo.HandEvents.ResourceThrew -= Open;
+        BotInfo.CollectedResourcesFromBase -= Open;
+        BotInfo.BaseBuilt -= Open;
     }
 
     private void Open(int count) =>
