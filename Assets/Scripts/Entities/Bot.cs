@@ -17,7 +17,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     private StateMachine<BotState, BotTransition> _stateMachine;
     private NavMeshAgent _agent;
 
-    public event Action BaseBuilt;
+    public event Action StartedToBuildBase;
 
     public event Action CollectedResourcesFromBase;
 
@@ -27,7 +27,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;
 
-    public ITarget LastTarget => HasTargets ? _targets.Last() : null;
+    private ITarget LastTarget => HasTargets ? _targets.Last() : null;
 
     public bool HasTargets => _targets.Count > 0;
 
@@ -73,6 +73,18 @@ public class Bot : MonoBehaviour, IReadOnlyBot
         }
     }
 
+    public void AddResourcesAsTargets(ITarget[] resources, BotsBase @base)
+    {
+        if (LastTarget is Resource)
+            AddTarget(@base);
+
+        foreach (ITarget resource in resources)
+        {
+            AddTarget(resource);
+            AddTarget(@base);
+        }
+    }
+
     public void AddTarget(ITarget target) =>
         _targets.Enqueue(target ?? throw new ArgumentNullException(nameof(target)));
 
@@ -92,7 +104,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
             flag.DisableObject();
             RemoveCurrentTarget();
 
-            BaseBuilt?.Invoke();
+            StartedToBuildBase?.Invoke();
         }
     }
 

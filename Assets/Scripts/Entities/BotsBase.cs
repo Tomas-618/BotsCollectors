@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 {
+    private readonly ResourcesSorter _resourcesSorter = new ResourcesSorter();
+
     [SerializeField, Min(3)] private int _maxEntitiesCount;
 
     [SerializeField] private InterfaceReference<IReadOnlyResourcesSpawnerEvents, ResourcesSpawnerOnPlane> _spawnerEvents;
@@ -71,25 +73,37 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 
     private void SetResourcesTargetsToEntities(ITarget[] resources)
     {
-        for (int i = 0; i < resources.Length; i++)
+        _resourcesSorter.Clear();
+        _resourcesSorter.AddGroups(_entities.Count);
+
+        _resourcesSorter.AddForEachGroup(resources);
+
+        for (int i = 0; i < _entities.Count; i++)
         {
-            int currentEntityIndex = i % _entities.Count;
+            _resourcesSorter.SortGroupByAscendingDistanceToBot(_entities[i], i);
 
-            if (_entities[currentEntityIndex].LastTarget is Resource)
-                _entities[currentEntityIndex].AddTarget(this);
+            ITarget[] group = _resourcesSorter.GetGroupByIndex(i);
 
-            _entities[currentEntityIndex].AddTarget(resources[i]);
-            _entities[currentEntityIndex].AddTarget(this);
+            _entities[i].AddResourcesAsTargets(group, this);
         }
     }
 
-    private void OnFlagEnabled() =>
+    private void OnFlagEnabled()
+    {
         _hasPriorityToBuildNew = true;
+        UpdatePriority();
+    }
 
     private void AddResource()
     {
         _resourcesCount++;
+        UpdatePriority();
 
+        ResourcesCountChanged?.Invoke(_resourcesCount);
+    }
+
+    private void UpdatePriority()
+    {
         if (_hasPriorityToBuildNew)
         {
             if (_resourcesCount >= ResourcesCountToCreateNew)
@@ -98,8 +112,6 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
                 SetFlagTargetToRandomEntity(_flag);
             }
         }
-
-        ResourcesCountChanged?.Invoke(_resourcesCount);
     }
 
     private void SetFlagTargetToRandomEntity(Flag flag)
