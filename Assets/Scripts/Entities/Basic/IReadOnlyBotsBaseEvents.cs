@@ -2,7 +2,7 @@
 
 public interface IReadOnlyBotsBaseEvents
 {
-    event Action<bool> EntityAdded;
+    event Action<bool> EntitiesCountChanged;
 
-    event Action<int> ResourcesCountChanged;
+    event Action<int, bool> ResourcesCountChanged;
 }

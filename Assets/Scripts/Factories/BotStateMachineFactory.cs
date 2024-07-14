@@ -17,6 +17,7 @@ public class BotStateMachineFactory
         BuildBaseState buildBaseState = new BuildBaseState(_bot);
 
         IdleTransition idleTransition = new IdleTransition(idleState, _bot);
+        MoveToIdleTransition moveToIdleTransition = new MoveToIdleTransition(idleState, _bot);
         MoveTransition moveTransition = new MoveTransition(moveState, _bot);
         CollectTransition collectTransition = new CollectTransition(collectState, _bot);
         PutTransition putTransition = new PutTransition(putState, _bot);
@@ -24,6 +25,7 @@ public class BotStateMachineFactory
 
         idleState.AddTransition(moveTransition);
 
+        moveState.AddTransition(moveToIdleTransition);
         moveState.AddTransition(collectTransition);
         moveState.AddTransition(putTransition);
         moveState.AddTransition(buildBaseTransition);

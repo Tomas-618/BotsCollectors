@@ -32,17 +32,19 @@ public class ResourcesSorter
         }
     }
 
-    public void SortGroupByAscendingDistanceToBot(Bot bot, int groupIndex)
+    public void SortInEachGroupByAscendingDistanceToObject(Transform gameObjectTransform)
     {
-        if (bot == null)
-            throw new ArgumentNullException(nameof(bot));
+        if (gameObjectTransform == null)
+            throw new ArgumentNullException(nameof(gameObjectTransform));
 
-        _groups[groupIndex] = _groups[groupIndex]
-            .OrderBy(target => Vector3.Distance(bot.transform.position, target.TransformInfo.position))
-            .ToList();
+        for (int i = 0; i < _groups.Count; i++)
+        {
+            _groups[i] = _groups[i]
+                .OrderBy(target => Vector3.Distance(gameObjectTransform.position, target.TransformInfo.position))
+                .ToList();
+        }
     }
 
     public ITarget[] GetGroupByIndex(int index) =>
-        _groups[index]
-        .ToArray();
+        _groups[index].ToArray();
 }

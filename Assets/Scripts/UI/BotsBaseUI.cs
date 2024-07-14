@@ -17,6 +17,6 @@ public class BotsBaseUI : MonoBehaviour
     private void OnDisable() =>
         _events.Value.ResourcesCountChanged -= ChangeValue;
 
-    private void ChangeValue(int count) =>
+    private void ChangeValue(int count, bool isLess) =>
         _text.text = count.ToString();
 }

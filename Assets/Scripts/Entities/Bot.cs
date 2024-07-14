@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using BasicStateMachine;
@@ -26,8 +25,6 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     public IReadOnlyBotHandEvents HandEvents => _hand;
 
     public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;
-
-    private ITarget LastTarget => HasTargets ? _targets.Last() : null;
 
     public bool HasTargets => _targets.Count > 0;
 
@@ -66,7 +63,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     public void Collect()
     {
-        if ((CurrentTarget ?? throw new ArgumentNullException(nameof(CurrentTarget))) is Resource resource)
+        if (CurrentTarget is Resource resource)
         {
             _hand.Take(resource);
             RemoveCurrentTarget();
@@ -75,7 +72,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     public void AddResourcesAsTargets(ITarget[] resources, BotsBase @base)
     {
-        if (LastTarget is Resource)
+        if (_hand.HasResource)
             AddTarget(@base);
 
         foreach (ITarget resource in resources)
@@ -98,7 +95,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     public void BuildNewBase()
     {
-        if ((CurrentTarget ?? throw new ArgumentNullException(nameof(CurrentTarget))) is Flag flag)
+        if (CurrentTarget is Flag flag)
         {
             flag.PositionChanged -= MoveToCurrentTarget;
             flag.DisableObject();
@@ -127,16 +124,20 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     public void CollectResourcesFromBase()
     {
-        HasPriorityToBuildNewBase = false;
-
-        if ((CurrentTarget ?? throw new ArgumentNullException(nameof(CurrentTarget))) is BotsBase @base)
+        if (CurrentTarget is BotsBase @base)
         {
+            HasPriorityToBuildNewBase = false;
             @base.SpendResources(@base.ResourcesCountToCreateNew);
 
             CollectedResourcesFromBase?.Invoke();
         }
     }
 
-    public void RemoveCurrentTarget() =>
+    public void RemoveCurrentTarget()
+    {
+        if (HasTargets == false)
+            return;
+
         _targets.Dequeue();
+    }
 }

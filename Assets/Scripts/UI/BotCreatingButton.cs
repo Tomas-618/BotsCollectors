@@ -11,13 +11,13 @@ public class BotCreatingButton : MonoBehaviour
 
     private void OnEnable()
     {
-        _baseEvents.Value.EntityAdded += OnEntityAdded;
+        _baseEvents.Value.EntitiesCountChanged += OnEntityAdded;
         _baseEvents.Value.ResourcesCountChanged += OnResourcesCountChanged;
     }
 
     private void OnDisable()
     {
-        _baseEvents.Value.EntityAdded -= OnEntityAdded;
+        _baseEvents.Value.EntitiesCountChanged -= OnEntityAdded;
         _baseEvents.Value.ResourcesCountChanged -= OnResourcesCountChanged;
     }
 
@@ -27,7 +27,7 @@ public class BotCreatingButton : MonoBehaviour
         ChangeState();
     }
 
-    private void OnResourcesCountChanged(int count)
+    private void OnResourcesCountChanged(int count, bool isLess)
     {
         _isResourcesEnough = count >= _spawner.Value.ResourcesCountToSpawn;
         ChangeState();

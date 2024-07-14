@@ -18,9 +18,9 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     private int _resourcesCount;
     private bool _hasPriorityToBuildNew;
 
-    public event Action<bool> EntityAdded;
+    public event Action<bool> EntitiesCountChanged;
 
-    public event Action<int> ResourcesCountChanged;
+    public event Action<int, bool> ResourcesCountChanged;
 
     [field: SerializeField] public int ResourcesCountToCreateNew { get; private set; }
 
@@ -55,7 +55,7 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         if (count <= _resourcesCount)
             _resourcesCount -= count;
 
-        ResourcesCountChanged?.Invoke(_resourcesCount);
+        ResourcesCountChanged?.Invoke(_resourcesCount, true);
     }
 
     public void AddNewEntity(Bot entity)
@@ -68,7 +68,11 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         entity.HandEvents.ResourceThrew += AddResource;
         _selectableBase.enabled = _entities.Count > _minEntitiesCount;
 
-        EntityAdded?.Invoke(CanAddNewBot);
+        ITarget[] resources = TakeResourcesFromAllEntities();
+
+        SetResourcesTargetsToEntities(resources);
+
+        EntitiesCountChanged?.Invoke(CanAddNewBot);
     }
 
     private void SetResourcesTargetsToEntities(ITarget[] resources)
@@ -77,15 +81,16 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         _resourcesSorter.AddGroups(_entities.Count);
 
         _resourcesSorter.AddForEachGroup(resources);
+        _resourcesSorter.SortInEachGroupByAscendingDistanceToObject(TransformInfo);
 
         for (int i = 0; i < _entities.Count; i++)
         {
-            _resourcesSorter.SortGroupByAscendingDistanceToBot(_entities[i], i);
-
             ITarget[] group = _resourcesSorter.GetGroupByIndex(i);
 
             _entities[i].AddResourcesAsTargets(group, this);
         }
+
+        _entities.ForEach(entity => entity.MoveToCurrentTarget());
     }
 
     private void OnFlagEnabled()
@@ -99,7 +104,7 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         _resourcesCount++;
         UpdatePriority();
 
-        ResourcesCountChanged?.Invoke(_resourcesCount);
+        ResourcesCountChanged?.Invoke(_resourcesCount, false);
     }
 
     private void UpdatePriority()
@@ -118,20 +123,36 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     {
         int randomEntityIndex = UnityEngine.Random.Range(0, _entities.Count);
 
-        Bot entity = _entities[randomEntityIndex];
+        Bot desiredEntity = _entities[randomEntityIndex];
 
-        ITarget[] targets = entity.TakeAllTargets()
-            .Where(target => target is Resource)
-            .ToArray();
+        ITarget[] resources = TakeResourcesFromAllEntities();
 
         _entities.RemoveAt(randomEntityIndex);
         _selectableBase.enabled = _entities.Count > _minEntitiesCount;
 
-        entity.AddTarget(this);
-        entity.AddTarget(flag);
-        entity.SetPriorityToBuildNewBase(flag);
+        desiredEntity.AddTarget(this);
+        desiredEntity.AddTarget(flag);
+        desiredEntity.SetPriorityToBuildNewBase(flag);
 
-        entity.MoveToCurrentTarget();
-        SetResourcesTargetsToEntities(targets);
+        desiredEntity.MoveToCurrentTarget();
+        SetResourcesTargetsToEntities(resources);
+
+        EntitiesCountChanged?.Invoke(CanAddNewBot);
+    }
+
+    private ITarget[] TakeResourcesFromAllEntities()
+    {
+        List<ITarget> resources = new List<ITarget>();
+
+        foreach (Bot entity in _entities)
+        {
+            ITarget[] targets = entity.TakeAllTargets()
+               .Where(target => target is Resource)
+               .ToArray();
+
+            resources.AddRange(targets);
+        }
+
+        return resources.ToArray();
     }
 }
