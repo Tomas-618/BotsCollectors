@@ -1363,15 +1363,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxEntitiesCount: 8
-  _spawnerEvents:
-    _value: {fileID: 0}
+  _minEntitiesCount: 1
   _entities:
   - {fileID: 1261451076974981197}
   - {fileID: 5697024864860857400}
   - {fileID: 4907724807557106573}
   _selectableBase: {fileID: 3545420983788403961}
-  _flag: {fileID: 4884728464239606446}
-  _minEntitiesCount: 1
+  <FlagInfo>k__BackingField: {fileID: 4884728464239606446}
   <ResourcesCountToCreateNew>k__BackingField: 5
 --- !u!1 &5094704507083757705
 GameObject:
@@ -1904,7 +1902,6 @@ GameObject:
   - component: {fileID: 5422150699650526733}
   - component: {fileID: 3463276657088509727}
   - component: {fileID: 2080841356971881389}
-  - component: {fileID: 6439372643910627932}
   - component: {fileID: 351852266266454861}
   - component: {fileID: 3545420983788403961}
   - component: {fileID: 6473139336173447413}
@@ -2003,37 +2000,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6439372643910627932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5726199639674030783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: a7e26a3974f36f1448f4b7b5d911bd10, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!114 &351852266266454861
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -274,17 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b2fb8052ab7f54b941ccd1a0633f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &221157821 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5697024864860857400, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-  m_PrefabInstance: {fileID: 1768550862349453701}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc23d60c14a9d1498e78fb95482a0e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &502791180
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,17 +489,6 @@ Transform:
   m_Father: {fileID: 866962133}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &804850475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4907724807557106573, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-  m_PrefabInstance: {fileID: 1768550862349453701}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc23d60c14a9d1498e78fb95482a0e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &866962129
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,17 +749,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!114 &1878865767 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4884728464239606446, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-  m_PrefabInstance: {fileID: 1768550862349453701}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4148ffed627e6e47a63d7f3ed9191b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1880156258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,52 +1236,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResourcesBase
       objectReference: {fileID: 0}
-    - target: {fileID: 5589226361703246025, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6161169578995823967, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439372643910627932, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: 3c4d2c519d929df45bef0b0241f64ecb, type: 2}
-    - target: {fileID: 6469305341768844739, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.5000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: _entities.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: _spawnerEvents._value
-      value: 
-      objectReference: {fileID: 866962135}
-    - target: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: _entities.Array.data[1]
-      value: 
-      objectReference: {fileID: 221157821}
-    - target: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: _entities.Array.data[2]
-      value: 
-      objectReference: {fileID: 804850475}
-    - target: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: <FlagInfo>k__BackingField
-      value: 
-      objectReference: {fileID: 1878865767}
-    - target: {fileID: 7415028026015349254, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7479693398491181826, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2068687497}
-    m_RemovedComponents:
-    - {fileID: 6439372643910627932, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
