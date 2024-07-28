@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using BasicStateMachine;
@@ -7,16 +6,15 @@ using BasicStateMachine;
 [SelectionBase, RequireComponent(typeof(NavMeshAgent))]
 public class Bot : MonoBehaviour, IReadOnlyBot
 {
-    private readonly Queue<ITarget> _targets = new Queue<ITarget>();
-
     [SerializeField, Min(0)] private float _distanceToInterract;
 
     [SerializeField] private BotHand _hand;
 
     private StateMachine<BotState, BotTransition> _stateMachine;
     private NavMeshAgent _agent;
+    private BotsBase _base;
 
-    public event Action StartedToBuildBase;
+    public event Action BuiltBase;
 
     public event Action CollectedResourcesFromBase;
 
@@ -24,9 +22,9 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     public IReadOnlyBotHandEvents HandEvents => _hand;
 
-    public ITarget CurrentTarget => HasTargets ? _targets.Peek() : null;
+    public ITarget CurrentTarget { get; private set; }
 
-    public bool HasTargets => _targets.Count > 0;
+    public bool HasTarget => CurrentTarget != null;
 
     public bool HasPriorityToBuildNewBase { get; private set; }
 
@@ -34,7 +32,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     {
         get
         {
-            if (CurrentTarget == null)
+            if (HasTarget == false)
                 return true;
 
             return Vector3.Distance(transform.position, CurrentTarget.TransformInfo.position) <= _distanceToInterract;
@@ -52,92 +50,71 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     private void Update() =>
         _stateMachine.Update();
 
-    public ITarget[] TakeAllTargets()
+    public void SetTarget(ITarget target) =>
+        CurrentTarget = target ?? throw new ArgumentNullException(nameof(target));
+
+    public void ResetPath() =>
+        _agent.ResetPath();
+
+    public void MoveToTarget()
     {
-        ITarget[] targets = _targets.ToArray();
-
-        _targets.Clear();
-
-        return targets;
+        if (HasTarget)
+            _agent.SetDestination(CurrentTarget.TransformInfo.position);
     }
 
-    public void Collect()
+    public void CollectResource()
     {
         if (CurrentTarget is Resource resource)
         {
             _hand.Take(resource);
-            RemoveCurrentTarget();
+            SetTarget(_base);
         }
     }
-
-    public void AddResourcesAsTargets(ITarget[] resources, BotsBase @base)
-    {
-        if (_hand.HasResource)
-            AddTarget(@base);
-
-        foreach (ITarget resource in resources)
-        {
-            AddTarget(resource);
-            AddTarget(@base);
-        }
-    }
-
-    public void AddTarget(ITarget target) =>
-        _targets.Enqueue(target ?? throw new ArgumentNullException(nameof(target)));
-
-    public void MoveToCurrentTarget()
-    {
-        if (CurrentTarget == null)
-            return;
-
-        _agent.SetDestination(CurrentTarget.TransformInfo.position);
-    }
-
-    public void BuildNewBase()
-    {
-        if (CurrentTarget is Flag flag)
-        {
-            flag.PositionChanged -= MoveToCurrentTarget;
-            flag.DisableObject();
-            RemoveCurrentTarget();
-
-            StartedToBuildBase?.Invoke();
-        }
-    }
-
-    public void SetPriorityToBuildNewBase(Flag flag)
-    {
-        flag.PositionChanged += MoveToCurrentTarget;
-        HasPriorityToBuildNewBase = true;
-    }
-
-    public void ResetPath() =>
-        _agent.ResetPath();
 
     public void PutResource()
     {
         Resource resource = _hand.Throw();
 
+        _base.PutResource(this, resource);
+
         if (resource != null)
             resource.PoolComponent.ReturnToPool();
     }
 
-    public void CollectResourcesFromBase()
+    public void SetPriorityToBuildNewBase()
     {
-        if (CurrentTarget is BotsBase @base)
-        {
-            HasPriorityToBuildNewBase = false;
-            @base.SpendResources(@base.ResourcesCountToCreateNew);
+        _base.FlagInfo.PositionChanged += MoveToTarget;
+        HasPriorityToBuildNewBase = true;
 
-            CollectedResourcesFromBase?.Invoke();
+        if (HasTarget == false)
+            SetTarget(_base);
+    }
+
+    public void CollectResourcesFromBaseToBuildNew()
+    {
+        _base.SpendResources(_base.ResourcesCountToCreateNew);
+        SetTarget(_base.FlagInfo);
+
+        CollectedResourcesFromBase?.Invoke();
+    }
+
+    public void SetBase(BotsBase @base) =>
+        _base = @base != null ? @base : throw new ArgumentNullException(nameof(@base));
+
+    public void BuildNewBase()
+    {
+        if (CurrentTarget is Flag flag)
+        {
+            flag.PositionChanged -= MoveToTarget;
+            flag.DisableObject();
+
+            RemoveCurrentTarget();
+            HasPriorityToBuildNewBase = false;
+
+            BuiltBase?.Invoke();
         }
     }
 
-    public void RemoveCurrentTarget()
-    {
-        if (HasTargets == false)
-            return;
-
-        _targets.Dequeue();
-    }
+    public void RemoveCurrentTarget() =>
+        CurrentTarget = null;
 }

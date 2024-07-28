@@ -8,8 +8,6 @@
         BotInfo.PutResource();
 
         if (BotInfo.HasPriorityToBuildNewBase)
-            BotInfo.CollectResourcesFromBase();
-
-        BotInfo.RemoveCurrentTarget();
+            BotInfo.CollectResourcesFromBaseToBuildNew();
     }
 }

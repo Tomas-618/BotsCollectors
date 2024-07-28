@@ -33,6 +33,8 @@ public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpa
 
         Bot entity = _fabric.Create(_parent);
 
+        entity.SetBase(_base);
+
         _base.SpendResources(_resourcesCountToSpawn);
         _base.AddNewEntity(entity);
 

@@ -5,7 +5,7 @@
         BotInfo.HandEvents.ResourceTaken += Open;
         BotInfo.HandEvents.ResourceThrew += Open;
         BotInfo.CollectedResourcesFromBase += Open;
-        BotInfo.StartedToBuildBase += Open;
+        BotInfo.BuiltBase += Open;
     }
 
     public void Dispose()
@@ -13,7 +13,7 @@
         BotInfo.HandEvents.ResourceTaken -= Open;
         BotInfo.HandEvents.ResourceThrew -= Open;
         BotInfo.CollectedResourcesFromBase -= Open;
-        BotInfo.StartedToBuildBase -= Open;
+        BotInfo.BuiltBase -= Open;
     }
 
     private void Open(int count) =>

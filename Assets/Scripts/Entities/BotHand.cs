@@ -17,8 +17,6 @@ public class BotHand : MonoBehaviour, IReadOnlyBotHandEvents
 
     public event Action ResourceThrew;
 
-    public bool HasResource => _resource != null;
-
     private void Awake()
     {
         _transform = transform;

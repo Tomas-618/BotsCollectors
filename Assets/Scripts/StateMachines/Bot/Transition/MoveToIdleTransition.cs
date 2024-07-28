@@ -4,7 +4,7 @@
 
     private void Open(int count)
     {
-        if (BotInfo.HasTargets == false)
+        if (BotInfo.HasTarget == false)
             Open();
     }
 }

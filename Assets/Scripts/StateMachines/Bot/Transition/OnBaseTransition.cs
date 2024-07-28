@@ -1,6 +1,6 @@
-﻿public class PutTransition : BotTransition
+﻿public class OnBaseTransition : BotTransition
 {
-    public PutTransition(BotState nextState, Bot bot) : base(nextState, bot) { }
+    public OnBaseTransition(BotState nextState, Bot bot) : base(nextState, bot) { }
 
     public override void Update()
     {

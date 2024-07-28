@@ -4,7 +4,7 @@
 
     public override void Update()
     {
-        if (BotInfo.HasTargets)
+        if (BotInfo.HasTarget)
             Open();
     }
 }
