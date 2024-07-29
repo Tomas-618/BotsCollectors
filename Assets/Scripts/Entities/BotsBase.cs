@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Zenject;
 
-public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget, IResourcesWorker
+public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 {
     [SerializeField, Min(3)] private int _maxEntitiesCount;
     [SerializeField, Min(0)] private int _minEntitiesCount;
 
     [SerializeField] private List<Bot> _entities;
+    [SerializeField] private TransformLooker _playerCameraLooker;
+    [SerializeField] private ResourcesGround _resourcesGround;
     [SerializeField] private SelectableBase _selectableBase;
 
-    private List<ITarget> _desiredResources;
     private int _resourcesCount;
     private bool _hasPriorityToBuildNew;
 
@@ -29,19 +30,26 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget, IResour
 
     public bool CanAddNewBot => _entities.Count < _maxEntitiesCount;
 
-    private void Awake()
-    {
-        _entities.ForEach(entity => entity.SetBase(this));
-
+    private void Awake() =>
         TransformInfo = transform;
-        _desiredResources = new List<ITarget>();
+
+    private void OnEnable()
+    {
+        _resourcesGround.SpawnedNew += SetResourcesTargetsToEntities;
+        FlagInfo.Enabled += OnFlagEnabled;
     }
 
-    private void OnEnable() =>
-        FlagInfo.Enabled += OnFlagEnabled;
-
-    private void OnDisable() =>
+    private void OnDisable()
+    {
+        _resourcesGround.SpawnedNew -= SetResourcesTargetsToEntities;
         FlagInfo.Enabled -= OnFlagEnabled;
+    }
+
+    public void Init(ResourcesGround resourcesGround, Camera playerCamera)
+    {
+        _resourcesGround = resourcesGround != null ? resourcesGround : throw new ArgumentNullException(nameof(resourcesGround));
+        _playerCameraLooker.Init(playerCamera);
+    }
 
     public void SpendResources(int count)
     {
@@ -53,9 +61,6 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget, IResour
 
         ResourcesCountChanged?.Invoke(_resourcesCount, true);
     }
-
-    public void AddNewDesiredResource(ITarget resource) =>
-        _desiredResources.Add(resource ?? throw new ArgumentNullException(nameof(resource)));
 
     public void AddNewEntity(Bot entity)
     {
@@ -70,21 +75,6 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget, IResour
         EntitiesCountChanged?.Invoke(CanAddNewBot);
     }
 
-    public void SetResourcesTargetsToEntities()
-    {
-        int iterationAmount = Mathf.Min(_desiredResources.Count, _entities.Count);
-
-        SortResourcesByAscendingDistance();
-
-        for (int i = 0; i < iterationAmount; i++)
-        {
-            ITarget currentTarget = _desiredResources[0];
-
-            _desiredResources.Remove(currentTarget);
-            _entities[i].SetTarget(currentTarget);
-        }
-    }
-
     public void PutResource(Bot entity, Resource resource)
     {
         if (entity == null)
@@ -97,41 +87,37 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget, IResour
         SetTargetToEntity(entity);
     }
 
+    public void SetResourcesTargetsToEntities()
+    {
+        int iterationAmount = Mathf.Min(_resourcesGround.TargetsCount, _entities.Count);
+
+        for (int i = 0; i < iterationAmount; i++)
+        {
+            ITarget currentTarget = _resourcesGround.TakeTheNearestTargetToBase(this);
+
+            _entities[i].SetTarget(currentTarget);
+        }
+    }
+
     private void SetTargetToEntity(Bot entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
 
-        if (_desiredResources.Count == 0)
+        if (_resourcesGround.TargetsCount == 0)
         {
             entity.RemoveCurrentTarget();
 
             return;
         }
 
-        ITarget currentResource = _desiredResources[0];
+        ITarget currentResource = _resourcesGround.TakeTheNearestTargetToBase(this);
 
-        _desiredResources.Remove(currentResource);
         entity.SetTarget(currentResource);
     }
 
-    private void SortResourcesByAscendingDistance()
-    {
-        _desiredResources = _desiredResources
-            .OrderBy(target => Vector3.Distance(TransformInfo.position, target.TransformInfo.position))
-            .ToList();
-    }
-
-    private void AddNewDesiredResources(ITarget[] resources) =>
-        _desiredResources.AddRange(resources ?? throw new ArgumentNullException(nameof(resources)));
-
-    private void OnFlagEnabled()
-    {
-        Bot entity = GetRandomEntity();
-
+    private void OnFlagEnabled() =>
         _hasPriorityToBuildNew = true;
-        UpdatePriority(entity);
-    }
 
     private void AddResource(Bot entity)
     {
@@ -169,10 +155,9 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget, IResour
         EntitiesCountChanged?.Invoke(CanAddNewBot);
     }
 
-    private Bot GetRandomEntity()
+    [Inject]
+    private void Construct()
     {
-        int randomEntityIndex = UnityEngine.Random.Range(0, _entities.Count);
 
-        return _entities[randomEntityIndex];
     }
 }

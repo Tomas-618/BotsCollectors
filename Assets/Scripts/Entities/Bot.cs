@@ -9,10 +9,11 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     [SerializeField, Min(0)] private float _distanceToInterract;
 
     [SerializeField] private BotHand _hand;
+    [SerializeField] private BotsBase _base;
+    [SerializeField] private BotsBasesSpawner _basesSpawner;
 
     private StateMachine<BotState, BotTransition> _stateMachine;
     private NavMeshAgent _agent;
-    private BotsBase _base;
 
     public event Action BuiltBase;
 
@@ -101,6 +102,9 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     public void SetBase(BotsBase @base) =>
         _base = @base != null ? @base : throw new ArgumentNullException(nameof(@base));
 
+    public void SetBasesSpawner(BotsBasesSpawner basesSpawner) =>
+        _basesSpawner = basesSpawner != null ? basesSpawner : throw new ArgumentNullException(nameof(basesSpawner));
+
     public void BuildNewBase()
     {
         if (CurrentTarget is Flag flag)
@@ -110,6 +114,8 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
             RemoveCurrentTarget();
             HasPriorityToBuildNewBase = false;
+
+            _basesSpawner.Spawn(this, flag.transform.position);
 
             BuiltBase?.Invoke();
         }

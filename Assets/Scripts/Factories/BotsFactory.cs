@@ -12,7 +12,7 @@ public class BotsFactory : MonoBehaviourFactory<Bot>
     {
         Bot entity = base.Create(parent);
 
-        entity.UILooker.Init(_playerCamera.transform);
+        entity.UILooker.Init(_playerCamera);
 
         return entity;
     }

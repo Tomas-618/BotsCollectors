@@ -8,17 +8,18 @@ public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpa
     [SerializeField, Min(0)] private int _resourcesCountToSpawn;
 
     [SerializeField] private BotsBase _base;
+    [SerializeField] private BotsBasesSpawner _basesSpawner;
     [SerializeField] private Transform _parent;
     [SerializeField] private InteractableButton _button;
 
-    private BotsFactory _fabric;
+    private BotsFactory _factory;
 
     public int ResourcesCountToSpawn => _resourcesCountToSpawn;
 
     public bool CanSpawn => _base.ResourcesCount >= _resourcesCountToSpawn && _base.CanAddNewBot;
 
     private void Reset() =>
-        _resourcesCountToSpawn = 3;
+        _resourcesCountToSpawn = 3; 
 
     private void OnEnable() =>
         _button.Clicked += Spawn;
@@ -31,9 +32,10 @@ public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpa
         if (CanSpawn == false)
             return;
 
-        Bot entity = _fabric.Create(_parent);
+        Bot entity = _factory.Create(_parent);
 
         entity.SetBase(_base);
+        entity.SetBasesSpawner(_basesSpawner);
 
         _base.SpendResources(_resourcesCountToSpawn);
         _base.AddNewEntity(entity);
@@ -42,6 +44,6 @@ public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpa
     }
 
     [Inject]
-    private void Construct(BotsFactory fabric) =>
-        _fabric = fabric ?? throw new ArgumentNullException(nameof(fabric));
+    private void Construct(BotsFactory factory) =>
+        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
 }
