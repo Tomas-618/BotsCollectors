@@ -287,8 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8924bbd45778d4b8aeafe56e0338e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerCamera: {fileID: 2068687497}
-  _resourcesGround: {fileID: 866962139}
   _parent: {fileID: 2125468649}
   _height: 1.25
 --- !u!1 &502791180
@@ -851,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 775103210}
-  _maxResourcesCount: 40
+  _maxResourcesCount: 8
 --- !u!114 &1880156263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,6 +877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 7400177017344075382, guid: d4507ccefdf9b804e99f2647d17401c1, type: 3}
+  _resourcesGround: {fileID: 866962139}
 --- !u!1 &2068687494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f37f5296fac742aad157dd4014da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 0}
+  _canvas: {fileID: 807614415408375364}
   _target: {fileID: 2068687498}
 --- !u!4 &597085944378473096
 Transform:
@@ -1588,7 +1587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f37f5296fac742aad157dd4014da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 0}
+  _canvas: {fileID: 1634299070477504701}
   _target: {fileID: 2068687498}
 --- !u!114 &1067057993068227670
 MonoBehaviour:
@@ -1853,7 +1852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f37f5296fac742aad157dd4014da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 0}
+  _canvas: {fileID: 57091039155302836}
   _target: {fileID: 2068687498}
 --- !u!1 &1968302718516289645
 GameObject:
@@ -1994,8 +1993,6 @@ MonoBehaviour:
   _collider: {fileID: 318495068854745640}
   _height: 1
   _resourcesCountToSpawn: 3
-  _prefab: {fileID: 7877666353430000406, guid: a5c54e753f2e399448c3e1517fb96138, type: 3}
-  _camera: {fileID: 2068687497}
   _base: {fileID: 9095461904339529715}
   _basesSpawner: {fileID: 97936497}
   _parent: {fileID: 133144326105147716}
@@ -3954,6 +3951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2772056355730638326}
   - component: {fileID: 9095461904339529715}
+  - component: {fileID: 9095461904339529716}
   m_Layer: 3
   m_Name: ResourcesBase
   m_TagString: Untagged
@@ -13093,12 +13091,26 @@ MonoBehaviour:
   - {fileID: 651531771316042184}
   - {fileID: 6306379017131240893}
   - {fileID: 6670000468696793608}
-  _spawner: {fileID: 2047203129110733512}
-  _playerCameraLooker: {fileID: 2325356561167116866}
   _resourcesGround: {fileID: 866962139}
+  _playerCameraLooker: {fileID: 2325356561167116866}
   _selectableBase: {fileID: 3006427879096497532}
   <FlagInfo>k__BackingField: {fileID: 6575586460411458347}
+  <SpawnerMediator>k__BackingField: {fileID: 9095461904339529716}
   <ResourcesCountToCreateNew>k__BackingField: 5
+--- !u!114 &9095461904339529716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6617264024397819793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b74f2d86d28ee4fabffdcd25a8c091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entity:
+    _value: {fileID: 2047203129110733512}
 --- !u!1 &9109760701332272003
 GameObject:
   m_ObjectHideFlags: 0

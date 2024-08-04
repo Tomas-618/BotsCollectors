@@ -115,7 +115,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
             RemoveCurrentTarget();
             HasPriorityToBuildNewBase = false;
 
-            _basesSpawner.Spawn(this, flag.transform.position);
+            _basesSpawner.SpawnByBot(this, flag.transform.position);
 
             BuiltBase?.Invoke();
         }

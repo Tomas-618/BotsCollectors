@@ -429,6 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4536098107590216819}
   - component: {fileID: 7400177017344075382}
+  - component: {fileID: -5761183706964654197}
   m_Layer: 3
   m_Name: ResourcesBase
   m_TagString: Untagged
@@ -471,12 +472,26 @@ MonoBehaviour:
   _maxEntitiesCount: 8
   _minEntitiesCount: 1
   _entities: []
-  _spawner: {fileID: 351852266266454861}
-  _playerCameraLooker: {fileID: 4093337596379374535}
   _resourcesGround: {fileID: 0}
+  _playerCameraLooker: {fileID: 4093337596379374535}
   _selectableBase: {fileID: 3545420983788403961}
   <FlagInfo>k__BackingField: {fileID: 4884728464239606446}
+  <SpawnerMediator>k__BackingField: {fileID: -5761183706964654197}
   <ResourcesCountToCreateNew>k__BackingField: 5
+--- !u!114 &-5761183706964654197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854345149191874068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b74f2d86d28ee4fabffdcd25a8c091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entity:
+    _value: {fileID: 351852266266454861}
 --- !u!1 &5094704507083757705
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,8 +754,6 @@ MonoBehaviour:
   _collider: {fileID: 2080841356971881389}
   _height: 1
   _resourcesCountToSpawn: 3
-  _prefab: {fileID: 7877666353430000406, guid: a5c54e753f2e399448c3e1517fb96138, type: 3}
-  _camera: {fileID: 0}
   _base: {fileID: 7400177017344075382}
   _basesSpawner: {fileID: 0}
   _parent: {fileID: 1824557824757719233}

@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(BoxCollider))]
-public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpawner
+public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpawner, IInitializable<BotsFactory>
 {
     [SerializeField, Min(0)] private int _resourcesCountToSpawn;
 
@@ -27,6 +26,9 @@ public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpa
     private void OnDisable() =>
         _button.Clicked -= Spawn;
 
+    public void Init(BotsFactory factory) =>
+        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+
     private void Spawn()
     {
         if (CanSpawn == false)
@@ -42,8 +44,4 @@ public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpa
 
         entity.transform.position = GetRandomPosition();
     }
-
-    [Inject]
-    private void Construct(BotsFactory factory) =>
-        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
 }

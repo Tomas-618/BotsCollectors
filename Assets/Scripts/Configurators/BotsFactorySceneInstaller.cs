@@ -9,7 +9,7 @@ public class BotsFactorySceneInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<Bot>().FromInstance(_prefab);
-        Container.Bind<Camera>().FromInstance(_camera);
+        Container.Bind<Camera>().FromInstance(_camera).AsSingle();
         Container.Bind<BotsFactory>().AsSingle();
     }
 }

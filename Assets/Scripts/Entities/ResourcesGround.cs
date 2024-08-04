@@ -13,6 +13,8 @@ public class ResourcesGround : MonoBehaviour
 
     public int TargetsCount => _targets.Count;
 
+    public bool HasTargets => _targets.Count > 0;
+
     private void Awake() =>
         _targets = new Queue<ITarget>();
 

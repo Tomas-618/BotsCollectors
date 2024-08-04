@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BotsFactory : MonoBehaviourFactory<Bot>
 {
-    private Camera _playerCamera;
+    private readonly Camera _playerCamera;
 
     public BotsFactory(Bot prefab, Camera playerCamera) : base(prefab) =>
         _playerCamera = playerCamera != null ? playerCamera : throw new ArgumentNullException(nameof(playerCamera));

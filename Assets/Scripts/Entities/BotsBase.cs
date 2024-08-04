@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 {
@@ -9,8 +8,8 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     [SerializeField, Min(0)] private int _minEntitiesCount;
 
     [SerializeField] private List<Bot> _entities;
-    [SerializeField] private TransformLooker _playerCameraLooker;
     [SerializeField] private ResourcesGround _resourcesGround;
+    [SerializeField] private TransformLooker _playerCameraLooker;
     [SerializeField] private SelectableBase _selectableBase;
 
     private int _resourcesCount;
@@ -21,6 +20,8 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     public event Action<int, bool> ResourcesCountChanged;
 
     [field: SerializeField] public Flag FlagInfo { get; private set; }
+
+    [field: SerializeField] public BotsSpawnerMediator SpawnerMediator { get; private set; }
 
     [field: SerializeField] public int ResourcesCountToCreateNew { get; private set; }
 
@@ -35,13 +36,13 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 
     private void OnEnable()
     {
-        _resourcesGround.SpawnedNew += SetResourcesTargetsToEntities;
+        SubscribeOnResourcesGroundEvent();
         FlagInfo.Enabled += OnFlagEnabled;
     }
 
     private void OnDisable()
     {
-        _resourcesGround.SpawnedNew -= SetResourcesTargetsToEntities;
+        UnsubscribeOnResourcesGroundEvent();
         FlagInfo.Enabled -= OnFlagEnabled;
     }
 
@@ -49,6 +50,8 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
     {
         _resourcesGround = resourcesGround != null ? resourcesGround : throw new ArgumentNullException(nameof(resourcesGround));
         _playerCameraLooker.Init(playerCamera);
+
+        SubscribeOnResourcesGroundEvent();
     }
 
     public void SpendResources(int count)
@@ -60,6 +63,15 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
             _resourcesCount -= count;
 
         ResourcesCountChanged?.Invoke(_resourcesCount, true);
+    }
+
+    public void AddNewEntities(Bot[] entities)
+    {
+        if (entities == null)
+            throw new ArgumentNullException(nameof(entities));
+
+        foreach (Bot entity in entities)
+            AddNewEntity(entity);
     }
 
     public void AddNewEntity(Bot entity)
@@ -99,6 +111,17 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         }
     }
 
+    private void SubscribeOnResourcesGroundEvent()
+    {
+        if (_resourcesGround == null)
+            return;
+
+        _resourcesGround.SpawnedNew += SetResourcesTargetsToEntities;
+    }
+
+    private void UnsubscribeOnResourcesGroundEvent() =>
+        _resourcesGround.SpawnedNew -= SetResourcesTargetsToEntities;
+
     private void SetTargetToEntity(Bot entity)
     {
         if (entity == null)
@@ -116,8 +139,17 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         entity.SetTarget(currentResource);
     }
 
-    private void OnFlagEnabled() =>
+    private void OnFlagEnabled()
+    {
         _hasPriorityToBuildNew = true;
+
+        if (_resourcesGround.HasTargets)
+            return;
+
+        Bot firstEntity = _entities[0];
+
+        UpdatePriority(firstEntity);
+    }
 
     private void AddResource(Bot entity)
     {
@@ -153,11 +185,5 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         entity.SetPriorityToBuildNewBase();
 
         EntitiesCountChanged?.Invoke(CanAddNewBot);
-    }
-
-    [Inject]
-    private void Construct()
-    {
-
     }
 }
