@@ -4,9 +4,9 @@ using UnityEngine;
 public class TransformLooker : MonoBehaviour
 {
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private Transform _target;
 
     private Transform _transform;
+    private Transform _target;
 
     private void Start() =>
         _transform = transform;

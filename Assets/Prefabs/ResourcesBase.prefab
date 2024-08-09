@@ -429,7 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4536098107590216819}
   - component: {fileID: 7400177017344075382}
-  - component: {fileID: -5761183706964654197}
+  - component: {fileID: 8699302146650479610}
   m_Layer: 3
   m_Name: ResourcesBase
   m_TagString: Untagged
@@ -471,14 +471,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxEntitiesCount: 8
   _minEntitiesCount: 1
-  _entities: []
-  _resourcesGround: {fileID: 0}
   _playerCameraLooker: {fileID: 4093337596379374535}
   _selectableBase: {fileID: 3545420983788403961}
+  <BotsParent>k__BackingField: {fileID: 1824557824757719233}
+  <UIHandlerMediator>k__BackingField: {fileID: 8699302146650479610}
   <FlagInfo>k__BackingField: {fileID: 4884728464239606446}
-  <SpawnerMediator>k__BackingField: {fileID: -5761183706964654197}
+  <Collider>k__BackingField: {fileID: 2080841356971881389}
   <ResourcesCountToCreateNew>k__BackingField: 5
---- !u!114 &-5761183706964654197
+--- !u!114 &8699302146650479610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -487,11 +487,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4854345149191874068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b74f2d86d28ee4fabffdcd25a8c091, type: 3}
+  m_Script: {fileID: 11500000, guid: cc1c9cf104b15164f9cee78eeb1d5d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entity:
-    _value: {fileID: 351852266266454861}
+  <UIHandler>k__BackingField: {fileID: 5887489341480270518}
 --- !u!1 &5094704507083757705
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +640,7 @@ GameObject:
   - component: {fileID: 5422150699650526733}
   - component: {fileID: 3463276657088509727}
   - component: {fileID: 2080841356971881389}
-  - component: {fileID: 351852266266454861}
+  - component: {fileID: 5887489341480270518}
   - component: {fileID: 3545420983788403961}
   - component: {fileID: 6473139336173447413}
   - component: {fileID: 5185374312548201055}
@@ -739,7 +738,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &351852266266454861
+--- !u!114 &5887489341480270518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -748,16 +747,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5726199639674030783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ae611e02b7b0c249a9f0fb9e3c97349, type: 3}
+  m_Script: {fileID: 11500000, guid: b473749f4685eaf498e2774385a17dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 2080841356971881389}
-  _height: 1
-  _resourcesCountToSpawn: 3
-  _base: {fileID: 7400177017344075382}
-  _basesSpawner: {fileID: 0}
-  _parent: {fileID: 1824557824757719233}
+  _resourcesCountToCreateNewBot: 3
   _button: {fileID: 6786666161730962878}
+  _base: {fileID: 7400177017344075382}
 --- !u!114 &3545420983788403961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc9245e2e2e089468ddda9bf3f42403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <FlagInfo>k__BackingField: {fileID: 4884728464239606446}
+  _flagInfo: {fileID: 4884728464239606446}
 --- !u!114 &6473139336173447413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,7 +1100,7 @@ MonoBehaviour:
   _baseEvents:
     _value: {fileID: 7400177017344075382}
   _spawner:
-    _value: {fileID: 351852266266454861}
+    _value: {fileID: 5887489341480270518}
 --- !u!1 &7269702751969700726
 GameObject:
   m_ObjectHideFlags: 0

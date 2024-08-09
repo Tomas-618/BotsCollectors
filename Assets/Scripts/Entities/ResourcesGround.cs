@@ -7,16 +7,13 @@ public class ResourcesGround : MonoBehaviour
 {
     [SerializeField] private InterfaceReference<IReadOnlyResourcesSpawnerEvents, ResourcesSpawnerOnPlane> _spawnerEvents;
 
-    private Queue<ITarget> _targets;
+    private Queue<ITarget> _targets = new Queue<ITarget>();
 
     public event Action SpawnedNew;
 
     public int TargetsCount => _targets.Count;
 
     public bool HasTargets => _targets.Count > 0;
-
-    private void Awake() =>
-        _targets = new Queue<ITarget>();
 
     private void OnEnable() =>
         _spawnerEvents.Value.Spawned += OnSpawned;

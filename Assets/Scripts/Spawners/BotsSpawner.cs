@@ -1,47 +1,39 @@
 using System;
 using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(BoxCollider))]
-public class BotsSpawner : BasicSpawnerOnCollider<BoxCollider>, IReadOnlyBotsSpawner, IInitializable<BotsFactory>
+public class BotsSpawner : MonoBehaviour
 {
-    [SerializeField, Min(0)] private int _resourcesCountToSpawn;
-
-    [SerializeField] private BotsBase _base;
-    [SerializeField] private BotsBasesSpawner _basesSpawner;
-    [SerializeField] private Transform _parent;
-    [SerializeField] private InteractableButton _button;
+    [SerializeField] private BotsBasesSpawnerMediator _basesSpawnerMediator;
+    [SerializeField] private float _height;
 
     private BotsFactory _factory;
 
-    public int ResourcesCountToSpawn => _resourcesCountToSpawn;
-
-    public bool CanSpawn => _base.ResourcesCount >= _resourcesCountToSpawn && _base.CanAddNewBot;
-
-    private void Reset() =>
-        _resourcesCountToSpawn = 3; 
-
-    private void OnEnable() =>
-        _button.Clicked += Spawn;
-
-    private void OnDisable() =>
-        _button.Clicked -= Spawn;
-
-    public void Init(BotsFactory factory) =>
-        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
-
-    private void Spawn()
+    public bool TrySpawnNewBot(BotsBase @base, out Bot newBot)
     {
-        if (CanSpawn == false)
-            return;
+        newBot = null;
 
-        Bot entity = _factory.Create(_parent);
+        if (@base.CanAddNewBot == false)
+            return false;
 
-        entity.SetBase(_base);
-        entity.SetBasesSpawner(_basesSpawner);
+        newBot = _factory.Create(@base.BotsParent);
 
-        _base.SpendResources(_resourcesCountToSpawn);
-        _base.AddNewEntity(entity);
+        newBot.SetBasesSpawner(_basesSpawnerMediator.Entity);
+        newBot.transform.position = GetRandomPositionOnCollider(@base.Collider, _height);
 
-        entity.transform.position = GetRandomPosition();
+        return true;
     }
+
+    private Vector3 GetRandomPositionOnCollider(Collider collider, float height)
+    {
+        Vector3 randomPosition = collider.GetRandomPosition();
+
+        randomPosition.y = height;
+
+        return randomPosition;
+    }
+
+    [Inject]
+    private void Construct(BotsFactory factory) =>
+        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
 }

@@ -1,21 +1,19 @@
-using BasicStateMachine;
+using System;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(Camera))]
 public class PlayerCameraRaycaster : MonoBehaviour
 {
-    [SerializeField] private SelectableBase _base;
-
     private PlayerCameraInput _input;
     private RaycasterHitInfoProvider _hitInfoProvider;
-    private StateMachine<BaseSelectionState, BaseSelectionTransition> _stateMachine;
-    
-    private void Awake()
-    {
+
+    public event Action Clicked;
+
+    public RaycasterHitInfoProvider HitInfoProvider => _hitInfoProvider;
+
+    private void Awake() =>
         _input = PlayerCameraInput.Instance;
-        _hitInfoProvider = new RaycasterHitInfoProvider(GetComponent<Camera>());
-        _stateMachine = new BaseSelectionStateMachineFactory(_hitInfoProvider).Create(_base);
-    }
 
     private void OnEnable() =>
         _input.Clicked += OnClicked;
@@ -27,5 +25,9 @@ public class PlayerCameraRaycaster : MonoBehaviour
         _hitInfoProvider.Update();
 
     private void OnClicked() =>
-        _stateMachine.Update();
+        Clicked?.Invoke();
+
+    [Inject]
+    private void Construct(RaycasterHitInfoProvider hitInfoProvider) =>
+        _hitInfoProvider = hitInfoProvider ?? throw new ArgumentNullException(nameof(hitInfoProvider));
 }

@@ -10,10 +10,11 @@ public class Bot : MonoBehaviour, IReadOnlyBot
 
     [SerializeField] private BotHand _hand;
     [SerializeField] private BotsBase _base;
-    [SerializeField] private BotsBasesSpawner _basesSpawner;
 
     private StateMachine<BotState, BotTransition> _stateMachine;
+    private BotsBasesSpawner _basesSpawner;
     private NavMeshAgent _agent;
+    private Transform _transform;
 
     public event Action BuiltBase;
 
@@ -44,6 +45,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     {
         BotStateMachineFactory stateMachineFactory = new BotStateMachineFactory(this);
 
+        _transform = transform;
         _agent = GetComponent<NavMeshAgent>();
         _stateMachine = stateMachineFactory.Create();
     }
@@ -76,15 +78,16 @@ public class Bot : MonoBehaviour, IReadOnlyBot
     {
         Resource resource = _hand.Throw();
 
-        _base.PutResource(this, resource);
+        if (resource == null)
+            return;
 
-        if (resource != null)
-            resource.PoolComponent.ReturnToPool();
+        _base.PutResource(this, resource);
+        resource.PoolComponent.ReturnToPool();
     }
 
-    public void SetPriorityToBuildNewBase()
+    public void SetPriorityToBuildNewBase(Flag flag)
     {
-        _base.FlagInfo.PositionChanged += MoveToTarget;
+        (flag ?? throw new ArgumentNullException(nameof(flag))).PositionChanged += MoveToTarget;
         HasPriorityToBuildNewBase = true;
 
         if (HasTarget == false)
@@ -99,8 +102,12 @@ public class Bot : MonoBehaviour, IReadOnlyBot
         CollectedResourcesFromBase?.Invoke();
     }
 
-    public void SetBase(BotsBase @base) =>
+    public void SetBase(BotsBase @base, Transform parent)
+    {
         _base = @base != null ? @base : throw new ArgumentNullException(nameof(@base));
+
+        _transform.SetParent(parent);
+    }
 
     public void SetBasesSpawner(BotsBasesSpawner basesSpawner) =>
         _basesSpawner = basesSpawner != null ? basesSpawner : throw new ArgumentNullException(nameof(basesSpawner));

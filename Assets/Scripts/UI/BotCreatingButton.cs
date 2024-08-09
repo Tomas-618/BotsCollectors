@@ -4,7 +4,7 @@ public class BotCreatingButton : MonoBehaviour
 {
     [SerializeField] private InteractableButton _model;
     [SerializeField] private InterfaceReference<IReadOnlyBotsBaseEvents, BotsBase> _baseEvents;
-    [SerializeField] private InterfaceReference<IReadOnlyBotsSpawner, BotsSpawner> _spawner;
+    [SerializeField] private InterfaceReference<IReadOnlyBotsSpawner, BotsBaseUIHandler> _spawner;
 
     private bool _isBaseFull;
     private bool _isResourcesEnough;
@@ -29,7 +29,7 @@ public class BotCreatingButton : MonoBehaviour
 
     private void OnResourcesCountChanged(int count, bool isLess)
     {
-        _isResourcesEnough = count >= _spawner.Value.ResourcesCountToSpawn;
+        _isResourcesEnough = count >= _spawner.Value.ResourcesCountToCreate;
         ChangeState();
     }
 

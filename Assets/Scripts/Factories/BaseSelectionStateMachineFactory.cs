@@ -1,6 +1,5 @@
 ﻿using System;
 using BasicStateMachine;
-using UnityEngine;
 
 public class BaseSelectionStateMachineFactory
 {
@@ -8,11 +7,6 @@ public class BaseSelectionStateMachineFactory
 
     public BaseSelectionStateMachineFactory(RaycasterHitInfoProvider hitInfoProvider) =>
         _hitInfoProvider = hitInfoProvider ?? throw new ArgumentNullException(nameof(hitInfoProvider));
-
-    public StateMachine<BaseSelectionState, BaseSelectionTransition> Create(Vector3 position)
-    {
-        return Create(null);
-    }
 
     public StateMachine<BaseSelectionState, BaseSelectionTransition> Create(SelectableBase @base)
     {
