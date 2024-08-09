@@ -1,4 +1,6 @@
 ﻿public interface ICanOnlyChangeSelectableBaseState
 {
-    void ChangeState();
+    void SetSelectedState();
+
+    void SetUnselectedState();
 }

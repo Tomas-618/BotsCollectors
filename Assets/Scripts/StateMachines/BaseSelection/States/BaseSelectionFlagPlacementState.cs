@@ -10,9 +10,9 @@ public class BaseSelectionFlagPlacementState : BaseSelectionState
     public override void Enter()
     {
         base.Enter();
-        _base.ChangeState();
+        _base.SetSelectedState();
     }
 
     public override void Exit() =>
-        _base.ChangeState();
+        _base.SetUnselectedState();
 }

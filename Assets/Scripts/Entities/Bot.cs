@@ -122,6 +122,7 @@ public class Bot : MonoBehaviour, IReadOnlyBot
             RemoveCurrentTarget();
             HasPriorityToBuildNewBase = false;
 
+            _base.RemoveEntity(this);
             _basesSpawner.SpawnByBot(this, flag.transform.position);
 
             BuiltBase?.Invoke();

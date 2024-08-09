@@ -14,7 +14,7 @@ public class BaseSelectionStateMachineFactory
         BaseSelectionFlagPlacementState flagPlacementState = new BaseSelectionFlagPlacementState(@base);
 
         BaseSelectionFlagPlacementTransition flagPlacementTransition = new(flagPlacementState, _hitInfoProvider, @base);
-        BaseSelectionIdleTransition idleTransition = new(idleState, _hitInfoProvider);
+        BaseSelectionIdleTransition idleTransition = new(idleState, _hitInfoProvider, @base);
         BaseSelectionFlagIdleTransition flagIdleTransition = new(idleState, _hitInfoProvider, @base);
 
         idleState.AddTransition(flagPlacementTransition);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
@@ -84,6 +85,12 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
         EntitiesCountChanged?.Invoke(CanAddNewBot);
     }
 
+    public void RemoveEntity(Bot entity)
+    {
+        _entities.Remove(entity);
+        _selectableBase.enabled = _entities.Count > _minEntitiesCount;
+    }
+
     public void PutResource(Bot entity, Resource resource)
     {
         if (entity == null)
@@ -100,13 +107,17 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 
     public void SetResourcesTargetsToEntities()
     {
-        int iterationAmount = Mathf.Min(_resourcesGround.TargetsCount, _entities.Count);
+        Bot[] bots = _entities
+            .Where(bot => bot.HasPriorityToBuildNewBase == false)
+            .ToArray();
+
+        int iterationAmount = Mathf.Min(_resourcesGround.TargetsCount, bots.Length);
 
         for (int i = 0; i < iterationAmount; i++)
         {
             ITarget currentTarget = _resourcesGround.TakeTheNearestTargetToBase(this);
 
-            _entities[i].SetTarget(currentTarget);
+            bots[i].SetTarget(currentTarget);
         }
     }
 
@@ -178,9 +189,6 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBaseEvents, ITarget
 
     private void SetNewPriorityForEntity(Bot entity)
     {
-        _entities.Remove(entity);
-        _selectableBase.enabled = _entities.Count > _minEntitiesCount;
-
         entity.SetPriorityToBuildNewBase(FlagInfo);
 
         EntitiesCountChanged?.Invoke(CanAddNewBot);

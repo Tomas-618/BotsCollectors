@@ -13,13 +13,20 @@ public class SelectableBase : MonoBehaviour, ICanOnlyChangeSelectableBaseState,
 
     public event Action<bool> ChangedState;
 
+    public event Action Disabled;
+
     public bool IsEnabled => enabled;
 
     private void OnEnable() =>
         SubscribeOnCameraRaycasterEvent();
 
-    private void OnDisable() =>
+    private void OnDisable()
+    {
+        Disabled?.Invoke();
+        _stateMachine.Update();
+
         UnsubscribeOnCameraRaycasterEvent();
+    }
 
     public void Init(PlayerCameraRaycaster cameraRaycaster)
     {
@@ -29,9 +36,15 @@ public class SelectableBase : MonoBehaviour, ICanOnlyChangeSelectableBaseState,
         SubscribeOnCameraRaycasterEvent();
     }
 
-    public void ChangeState()
+    public void SetSelectedState()
     {
-        _isSelected = !_isSelected;
+        _isSelected = true;
+        ChangedState?.Invoke(_isSelected);
+    }
+
+    public void SetUnselectedState()
+    {
+        _isSelected = false;
         ChangedState?.Invoke(_isSelected);
     }
 
