@@ -12,7 +12,7 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBase, IReadOnlyBotsBaseEvent
 
     public event Action<bool> BotsCountChanged;
 
-    public event Action BotRemoved;
+    public event Action PenultimateBotRemoved;
 
     [field: SerializeField] public Transform BotsParent { get; private set; }
     
@@ -72,7 +72,9 @@ public class BotsBase : MonoBehaviour, IReadOnlyBotsBase, IReadOnlyBotsBaseEvent
         _bots.Remove(bot);
 
         BotsCountChanged?.Invoke(CanAddBot);
-        BotRemoved?.Invoke();
+
+        if (CanRemoveBot == false)
+            PenultimateBotRemoved?.Invoke();
     }
 
     public TargetInfoOwner TakeFreeBot()

@@ -33,12 +33,12 @@ public class SelectableBaseLifeCycle : MonoBehaviour, IInitializable<PlayerCamer
             return;
 
         _cameraRaycaster.Clicked += UpdateStateMachine;
-        _botsBaseEvents.Value.BotRemoved += UpdateStateMachine;
+        _botsBaseEvents.Value.PenultimateBotRemoved += UpdateStateMachine;
     }
 
     private void RemoveListenersOnEvents()
     {
         _cameraRaycaster.Clicked -= UpdateStateMachine;
-        _botsBaseEvents.Value.BotRemoved -= UpdateStateMachine;
+        _botsBaseEvents.Value.PenultimateBotRemoved -= UpdateStateMachine;
     }
 }
