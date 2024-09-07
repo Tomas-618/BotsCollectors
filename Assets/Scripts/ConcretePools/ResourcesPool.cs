@@ -2,7 +2,7 @@ using System;
 using Pool;
 using UnityEngine;
 
-public class ResourcesPool
+public class ResourcesPool : IDisposable
 {
     private readonly ObjectsPool<Resource> _entities;
 
