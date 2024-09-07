@@ -3,10 +3,10 @@ using BasicStateMachine;
 
 public abstract class BotState : State<BotState, BotTransition>
 {
-    private readonly Bot _bot;
+    private readonly TargetInfoOwner _bot;
 
-    protected BotState(Bot bot) =>
-        _bot = bot ?? throw new ArgumentNullException(nameof(bot));
+    protected BotState(TargetInfoOwner bot) =>
+        _bot = bot != null ? bot : throw new ArgumentNullException(nameof(bot));
 
-    protected Bot BotInfo => _bot;
+    public TargetInfoOwner BotInfo => _bot;
 }

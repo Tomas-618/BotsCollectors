@@ -18,5 +18,5 @@ public abstract class BasicBotEventsHandler : MonoBehaviour
 
     protected abstract void OnCollect();
 
-    protected abstract void OnPut();
+    protected virtual void OnPut() { }
 }

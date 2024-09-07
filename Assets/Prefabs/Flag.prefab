@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2422963860141908803}
   - component: {fileID: -1221690147824969304}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   - {fileID: 9034152335182342566}
   - {fileID: 8349894400959084536}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-1221690147824969304
 MonoBehaviour:
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4133800037383791960}
   - component: {fileID: 3013155620281486039}
   - component: {fileID: 7173621700590397389}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cloth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8621,7 +8621,7 @@ GameObject:
   - component: {fileID: 3265843960425761138}
   - component: {fileID: 2035165035686861617}
   - component: {fileID: 6366528893959524030}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

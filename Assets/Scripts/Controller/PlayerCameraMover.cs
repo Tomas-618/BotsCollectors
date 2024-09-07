@@ -3,16 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class PlayerCameraMover : MonoBehaviour
 {
+    [SerializeField] private PlayerCameraInput _input;
     [SerializeField] private Transform _axisRotation;
 
     private Transform _transform;
-    private PlayerCameraInput _input;
 
-    private void Awake()
-    {
+    private void Awake() =>
         _transform = transform;
-        _input = PlayerCameraInput.Instance;
-    }
 
     private void OnEnable()
     {

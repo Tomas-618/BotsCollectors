@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class BotsBaseUI : MonoBehaviour
 {
-    [SerializeField] private InterfaceReference<IReadOnlyBotsBaseEvents, BotsBase> _events;
+    [SerializeField] private InterfaceReference<IReadOnlyBaseWalletEvents, ResourcesBaseWallet> _walletEvents;
 
     private TMP_Text _text;
 
@@ -12,11 +12,11 @@ public class BotsBaseUI : MonoBehaviour
         _text = GetComponent<TMP_Text>();
 
     private void OnEnable() =>
-        _events.Value.ResourcesCountChanged += ChangeValue;
+        _walletEvents.Value.CountChanged += ChangeValue;
 
     private void OnDisable() =>
-        _events.Value.ResourcesCountChanged -= ChangeValue;
+        _walletEvents.Value.CountChanged -= ChangeValue;
 
-    private void ChangeValue(int count, bool isLess) =>
+    private void ChangeValue(int count) =>
         _text.text = count.ToString();
 }

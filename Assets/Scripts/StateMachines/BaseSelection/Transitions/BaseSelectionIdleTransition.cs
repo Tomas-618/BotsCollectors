@@ -3,23 +3,21 @@
 public class BaseSelectionIdleTransition : BaseSelectionTransition
 {
     private readonly RaycasterHitInfoProvider _hitInfoProvider;
-    private readonly IReadOnlySelectableBaseEvents _baseEvents;
+    private readonly IReadOnlySelectableBase _base;
 
     public BaseSelectionIdleTransition(BaseSelectionState nextState, RaycasterHitInfoProvider hitInfoProvider,
-        IReadOnlySelectableBaseEvents baseEvents) : base(nextState)
+        IReadOnlySelectableBase @base) : base(nextState)
     {
         _hitInfoProvider = hitInfoProvider ?? throw new ArgumentNullException(nameof(hitInfoProvider));
-        _baseEvents = baseEvents ?? throw new ArgumentNullException(nameof(baseEvents));
-
-        _baseEvents.Disabled += Open;
+        _base = @base ?? throw new ArgumentNullException(nameof(@base));
     }
-
-    public void Dispose() =>
-        _baseEvents.Disabled -= Open;
 
     public override void Update()
     {
-        if (_hitInfoProvider.HasHit == false || _hitInfoProvider.HitInfo.transform.GetComponent<BasesSpawnZone>() == false)
+        if (_base.CanRemoveBot == false)
+            Open();
+
+        if (_hitInfoProvider.HasHit == false || _hitInfoProvider.HitInfo.transform.GetComponent<BasesSpawnZone>() == null)
             Open();
     }
 }

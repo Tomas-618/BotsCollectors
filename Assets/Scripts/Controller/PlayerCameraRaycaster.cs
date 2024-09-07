@@ -2,18 +2,15 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(Camera))]
-public class PlayerCameraRaycaster : MonoBehaviour
+public class PlayerCameraRaycaster : PlayerCamera
 {
-    private PlayerCameraInput _input;
+    [SerializeField] private PlayerCameraInput _input;
+
     private RaycasterHitInfoProvider _hitInfoProvider;
 
     public event Action Clicked;
 
     public RaycasterHitInfoProvider HitInfoProvider => _hitInfoProvider;
-
-    private void Awake() =>
-        _input = PlayerCameraInput.Instance;
 
     private void OnEnable() =>
         _input.Clicked += OnClicked;

@@ -12,7 +12,7 @@ namespace BasicStateMachine
         public Transition(TState nextState) =>
             _nextState = nextState ?? throw new ArgumentNullException(nameof(nextState));
 
-        public virtual void Update() { }
+        public abstract void Update();
 
         public bool TryGetNextState(out TState nextState)
         {

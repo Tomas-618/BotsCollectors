@@ -2,22 +2,9 @@ using System;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class PlayerCameraInput
+public class PlayerCameraInput : MonoBehaviour
 {
-    private static PlayerCameraInput s_instance;
-
     private PlayerCameraInputActions _actions;
-
-    private PlayerCameraInput()
-    {
-        _actions = new PlayerCameraInputActions();
-
-        _actions.Enable();
-        _actions.PlayerCamera.Zoom.performed += OnZoom;
-        _actions.PlayerCamera.Move.performed += OnMove;
-        _actions.PlayerCamera.Rotate.performed += OnRotate;
-        _actions.PlayerCamera.Click.performed += OnChoose;
-    }
 
     public event Action<Vector3> Zoomed;
 
@@ -27,17 +14,19 @@ public class PlayerCameraInput
 
     public event Action Clicked;
 
-    public static PlayerCameraInput Instance
-    {
-        get
-        {
-            s_instance ??= new PlayerCameraInput();
+    private void Awake() =>
+        _actions = new PlayerCameraInputActions();
 
-            return s_instance;
-        }
+    private void OnEnable()
+    {
+        _actions.Enable();
+        _actions.PlayerCamera.Zoom.performed += OnZoom;
+        _actions.PlayerCamera.Move.performed += OnMove;
+        _actions.PlayerCamera.Rotate.performed += OnRotate;
+        _actions.PlayerCamera.Click.performed += OnChoose;
     }
 
-    public void Dispose()
+    private void OnDisable()
     {
         _actions.Disable();
         _actions.PlayerCamera.Zoom.performed -= OnZoom;

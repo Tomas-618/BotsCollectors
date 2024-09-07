@@ -4,22 +4,22 @@ using Zenject;
 
 public class BotsSpawner : MonoBehaviour
 {
-    [SerializeField] private BotsBasesSpawnerMediator _basesSpawnerMediator;
     [SerializeField] private float _height;
 
     private BotsFactory _factory;
 
-    public bool TrySpawnNewBot(BotsBase @base, out Bot newBot)
+    public bool TrySpawnNewBot(BaseStorage baseStorage, out BotPrefab prefab)
     {
-        newBot = null;
+        BotsBase botsBase = baseStorage.BotsBaseInfo;
+        PhysicalBase physicalBase = baseStorage.Physical;
 
-        if (@base.CanAddNewBot == false)
+        prefab = null;
+
+        if (botsBase.CanAddBot == false)
             return false;
 
-        newBot = _factory.Create(@base.BotsParent);
-
-        newBot.SetBasesSpawner(_basesSpawnerMediator.Entity);
-        newBot.transform.position = GetRandomPositionOnCollider(@base.Collider, _height);
+        prefab = _factory.Create(botsBase.BotsParent, baseStorage);
+        prefab.transform.position = GetRandomPositionOnCollider(physicalBase.ColliderInfo, _height);
 
         return true;
     }

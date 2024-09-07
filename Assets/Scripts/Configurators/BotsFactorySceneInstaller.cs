@@ -3,13 +3,17 @@ using Zenject;
 
 public class BotsFactorySceneInstaller : MonoInstaller
 {
-    [SerializeField] private Bot _prefab;
-    [SerializeField] private Camera _camera;
+    [SerializeField] private BotPrefab _prefab;
+    [SerializeField] private BasesSpawner _basesSpawner;
+    [SerializeField] private PlayerCameraRaycaster _cameraRaycaster;
 
     public override void InstallBindings()
     {
-        Container.Bind<Bot>().FromInstance(_prefab);
-        Container.Bind<Camera>().FromInstance(_camera).AsSingle();
+        Container.Bind<BotPrefab>().FromInstance(_prefab);
+        Container.Bind<BasesSpawner>().FromInstance(_basesSpawner);
+        Container.Bind<PlayerCameraRaycaster>().FromInstance(_cameraRaycaster).AsSingle();
         Container.Bind<BotsFactory>().AsSingle();
+
+        Container.Bind<Camera>().FromInstance(_cameraRaycaster.CameraInfo);
     }
 }

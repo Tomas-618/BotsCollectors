@@ -37,5 +37,4 @@ namespace BasicStateMachine
             _currentState.Enter();
         }
     }
-
 }

@@ -1,19 +1,29 @@
 ﻿using System;
 using UnityEngine;
 
-public class BotsFactory : MonoBehaviourFactory<Bot>
+public class BotsFactory : MonoBehaviourFactory<BotPrefab, BaseStorage>
 {
-    private readonly Camera _playerCamera;
+    private readonly BasesSpawner _botsBasesSpawner;
+    private readonly PlayerCameraRaycaster _playerCamera;
 
-    public BotsFactory(Bot prefab, Camera playerCamera) : base(prefab) =>
-        _playerCamera = playerCamera != null ? playerCamera : throw new ArgumentNullException(nameof(playerCamera));
-
-    public override Bot Create(Transform parent)
+    public BotsFactory(BotPrefab prefab, BasesSpawner botsBasesSpawner, PlayerCameraRaycaster raycaster) : base(prefab)
     {
-        Bot entity = base.Create(parent);
+        _botsBasesSpawner = botsBasesSpawner != null ? botsBasesSpawner :
+            throw new ArgumentNullException(nameof(botsBasesSpawner));
+        _playerCamera = raycaster != null ? raycaster : throw new ArgumentNullException(nameof(raycaster));
+    }
 
-        entity.UILooker.Init(_playerCamera);
+    public override BotPrefab Create(Transform parent, BaseStorage storage)
+    {
+        BotPrefab prefab = base.Create(parent, storage);
 
-        return entity;
+        BotsBase botsBase = storage.BotsBaseInfo;
+
+        prefab.SetBase(storage);
+        botsBase.AddCreatedBot(prefab.TargetInfoOwner);
+
+        prefab.Init(_botsBasesSpawner, _playerCamera);
+
+        return prefab;
     }
 }

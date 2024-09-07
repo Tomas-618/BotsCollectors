@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TransformLooker : MonoBehaviour
+public class TransformLooker : MonoBehaviour, IInitializable<PlayerCamera>
 {
     [SerializeField] private Canvas _canvas;
 
@@ -14,9 +14,9 @@ public class TransformLooker : MonoBehaviour
     private void LateUpdate() =>
         _transform.LookAt(_target.position);
 
-    public void Init(Camera target)
+    public void Init(PlayerCamera target)
     {
         _target = (target != null ? target : throw new ArgumentNullException(nameof(target))).transform;
-        _canvas.worldCamera = target;
+        _canvas.worldCamera = target.CameraInfo;
     }
 }

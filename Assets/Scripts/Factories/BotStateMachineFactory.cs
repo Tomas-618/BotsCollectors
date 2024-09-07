@@ -3,36 +3,49 @@ using BasicStateMachine;
 
 public class BotStateMachineFactory
 {
-    private readonly Bot _bot;
+    private readonly TargetInfoOwner _entity;
+    private readonly BotMover _mover;
+    private readonly BotInteractor _interactor;
+    private readonly BotsBaseInfoOwner _botsBaseInfoOwner;
+    private readonly BaseWalletInfoOwner _baseWalletInfoOwner;
+    private readonly DistanceChecker _distanceChecker;
 
-    public BotStateMachineFactory(Bot bot) =>
-        _bot = bot != null ? bot : throw new ArgumentNullException(nameof(bot));
+    public BotStateMachineFactory(TargetInfoOwner entity, BotMover mover, BotInteractor interactor,
+        BotsBaseInfoOwner botsBaseInfoOwner, BaseWalletInfoOwner baseWalletInfoOwner,
+        DistanceChecker distanceChecker)
+    {
+        _entity = entity != null ? entity : throw new ArgumentNullException(nameof(entity));
+        _mover = mover != null ? mover : throw new ArgumentNullException(nameof(mover));
+        _interactor = interactor != null ? interactor : throw new ArgumentNullException(nameof(interactor));
+        _botsBaseInfoOwner = botsBaseInfoOwner != null ? botsBaseInfoOwner :
+            throw new ArgumentNullException(nameof(botsBaseInfoOwner));
+        _baseWalletInfoOwner = baseWalletInfoOwner != null ? baseWalletInfoOwner :
+            throw new ArgumentNullException(nameof(baseWalletInfoOwner));
+        _distanceChecker = distanceChecker != null ? distanceChecker :
+            throw new ArgumentNullException(nameof(distanceChecker));
+    }
 
     public StateMachine<BotState, BotTransition> Create()
     {
-        IdleState idleState = new IdleState(_bot);
-        MoveState moveState = new MoveState(_bot);
-        CollectState collectState = new CollectState(_bot);
-        OnBaseState putState = new OnBaseState(_bot);
-        BuildBaseState buildBaseState = new BuildBaseState(_bot);
+        BotIdleState idleState = new(_entity, _botsBaseInfoOwner);
+        BotMoveToTargetState moveToTargetState = new(_entity, _mover);
+        BotInteractState interactState = new(_entity, _interactor);
+        BotSettingBaseWalletTargetState settingBaseWalletTargetState = new(_entity, _baseWalletInfoOwner);
 
-        IdleTransition idleTransition = new IdleTransition(idleState, _bot);
-        MoveToIdleTransition moveToIdleTransition = new MoveToIdleTransition(idleState, _bot);
-        MoveTransition moveTransition = new MoveTransition(moveState, _bot);
-        CollectTransition collectTransition = new CollectTransition(collectState, _bot);
-        OnBaseTransition putTransition = new OnBaseTransition(putState, _bot);
-        BuildBaseTransition buildBaseTransition = new BuildBaseTransition(buildBaseState, _bot);
+        BotMoveToTargetTransition moveToTargetTransition = new(moveToTargetState, _entity);
+        BotInteractTransition interactTransition = new(interactState, _entity, _distanceChecker);
+        BotIdleTransition idleTransition = new(idleState, _entity, _baseWalletInfoOwner, _distanceChecker);
+        BotSettingBaseWalletTargetTransition settingBaseWalletTargetTransition = new(settingBaseWalletTargetState,
+            _entity, _baseWalletInfoOwner, _distanceChecker);
 
-        idleState.AddTransition(moveTransition);
+        idleState.AddTransition(moveToTargetTransition);
 
-        moveState.AddTransition(moveToIdleTransition);
-        moveState.AddTransition(collectTransition);
-        moveState.AddTransition(putTransition);
-        moveState.AddTransition(buildBaseTransition);
+        moveToTargetState.AddTransition(interactTransition);
 
-        collectState.AddTransition(idleTransition);
-        putState.AddTransition(idleTransition);
-        buildBaseState.AddTransition(idleTransition);
+        interactState.AddTransition(idleTransition);
+        interactState.AddTransition(settingBaseWalletTargetTransition);
+
+        settingBaseWalletTargetState.AddTransition(moveToTargetTransition);
 
         return new StateMachine<BotState, BotTransition>(idleState);
     }
