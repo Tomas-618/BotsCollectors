@@ -7,7 +7,7 @@ public class SelectableBaseLifeCycle : MonoBehaviour, IInitializable<PlayerCamer
     [SerializeField] private InterfaceReference<IReadOnlyBotsBaseEvents, BotsBase> _botsBaseEvents;
     [SerializeField] private SelectableBase _base;
 
-    private StateMachine<BaseSelectionState, BaseSelectionTransition> _stateMachine;
+    private StateMachine _stateMachine;
     private PlayerCameraRaycaster _cameraRaycaster;
 
     private void OnEnable() =>

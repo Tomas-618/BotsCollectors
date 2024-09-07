@@ -961,7 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 775103210}
-  _maxResourcesCount: 80
+  _maxResourcesCount: 10
 --- !u!114 &1880156263
 MonoBehaviour:
   m_ObjectHideFlags: 0

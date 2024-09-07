@@ -12,7 +12,7 @@ public class BaseSelectionStateMachineFactory
         _hitInfoProvider = hitInfoProvider ?? throw new ArgumentNullException(nameof(hitInfoProvider));
     }
 
-    public StateMachine<BaseSelectionState, BaseSelectionTransition> Create()
+    public StateMachine Create()
     {
         BaseSelectionIdleState idleState = new BaseSelectionIdleState();
         BaseSelectionFlagPlacementState flagPlacementState = new BaseSelectionFlagPlacementState(_base);
@@ -25,6 +25,6 @@ public class BaseSelectionStateMachineFactory
         flagPlacementState.AddTransition(idleTransition);
         flagPlacementState.AddTransition(flagIdleTransition);
 
-        return new StateMachine<BaseSelectionState, BaseSelectionTransition>(idleState);
+        return new StateMachine(idleState);
     }
 }

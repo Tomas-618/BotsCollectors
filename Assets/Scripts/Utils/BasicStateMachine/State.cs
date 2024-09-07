@@ -2,27 +2,26 @@
 
 namespace BasicStateMachine
 {
-    public abstract class State<TState, TTransition> where TState : State<TState, TTransition>
-        where TTransition : Transition<TState, TTransition>
+    public abstract class State
     {
-        private readonly List<TTransition> _transitions;
+        private readonly List<Transition> _transitions;
 
         protected State() =>
-            _transitions = new List<TTransition>();
+            _transitions = new List<Transition>();
 
-        public void AddTransition(TTransition transition)
+        public void AddTransition(Transition transition)
         {
             if (_transitions.Contains(transition) == false)
                 _transitions.Add(transition);
         }
 
-        public bool TryGetNext(out TState next)
+        public bool TryGetNext(out State next)
         {
             next = null;
 
-            foreach (TTransition transition in _transitions)
+            foreach (Transition transition in _transitions)
             {
-                if (transition.TryGetNextState(out TState nextState))
+                if (transition.TryGetNextState(out State nextState))
                 {
                     next = nextState;
 
@@ -35,7 +34,7 @@ namespace BasicStateMachine
 
         public void Update()
         {
-            foreach (TTransition transition in _transitions)
+            foreach (Transition transition in _transitions)
                 transition.Update();
 
             Work();
@@ -43,7 +42,7 @@ namespace BasicStateMachine
 
         public virtual void Enter()
         {
-            foreach (TTransition transition in _transitions)
+            foreach (Transition transition in _transitions)
                 transition.Close();
         }
 

@@ -10,7 +10,7 @@ public class BotLifeCycle : MonoBehaviour, IInitializable
     [SerializeField] private BaseWalletInfoOwner _baseWalletInfoOwner;
     [SerializeField] private DistanceChecker _distanceChecker;
 
-    private StateMachine<BotState, BotTransition> _stateMachine;
+    private StateMachine _stateMachine;
 
     private void Update() =>
         _stateMachine.Update();

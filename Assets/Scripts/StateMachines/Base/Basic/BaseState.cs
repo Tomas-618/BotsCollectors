@@ -1,3 +1,3 @@
 ﻿using BasicStateMachine;
 
-public abstract class BaseState : State<BaseState, BaseTransition> { }
+public abstract class BaseState : State { }

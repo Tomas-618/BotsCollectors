@@ -7,7 +7,7 @@ public class BaseLifeCycle : MonoBehaviour, IInitializable<ResourcesScanner>
     [SerializeField] private Flag _flag;
     [SerializeField] private int _amountToBuildBase;
 
-    private StateMachine<BaseState, BaseTransition> _stateMachine;
+    private StateMachine _stateMachine;
 
     private void Update() =>
         _stateMachine.Update();

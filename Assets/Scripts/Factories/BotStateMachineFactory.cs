@@ -25,7 +25,7 @@ public class BotStateMachineFactory
             throw new ArgumentNullException(nameof(distanceChecker));
     }
 
-    public StateMachine<BotState, BotTransition> Create()
+    public StateMachine Create()
     {
         BotIdleState idleState = new(_entity, _botsBaseInfoOwner);
         BotMoveToTargetState moveToTargetState = new(_entity, _mover);
@@ -47,6 +47,6 @@ public class BotStateMachineFactory
 
         settingBaseWalletTargetState.AddTransition(moveToTargetTransition);
 
-        return new StateMachine<BotState, BotTransition>(idleState);
+        return new StateMachine(idleState);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using BasicStateMachine;
 
-public abstract class BotState : State<BotState, BotTransition>
+public abstract class BotState : State
 {
     private readonly TargetInfoOwner _bot;
 

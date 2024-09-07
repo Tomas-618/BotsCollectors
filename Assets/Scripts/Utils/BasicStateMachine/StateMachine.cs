@@ -2,14 +2,13 @@
 
 namespace BasicStateMachine
 {
-    public class StateMachine<TState, TTransition> where TState : State<TState, TTransition>
-        where TTransition : Transition<TState, TTransition>
+    public class StateMachine
     {
-        private readonly TState _startState;
+        private readonly State _startState;
 
-        private TState _currentState;
+        private State _currentState;
 
-        public StateMachine(TState startState)
+        public StateMachine(State startState)
         {
             _startState = startState ?? throw new ArgumentNullException(nameof(startState));
             Reset();
@@ -23,14 +22,14 @@ namespace BasicStateMachine
 
         private void GetNextState()
         {
-            if (_currentState.TryGetNext(out TState nextState))
+            if (_currentState.TryGetNext(out State nextState))
                 ChangeState(nextState);
         }
 
         private void Reset() =>
             ChangeState(_startState);
 
-        private void ChangeState(TState state)
+        private void ChangeState(State state)
         {
             _currentState?.Exit();
             _currentState = state ?? throw new ArgumentNullException(nameof(state));

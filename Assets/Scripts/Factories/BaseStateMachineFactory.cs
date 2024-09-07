@@ -20,7 +20,7 @@ public class BaseStateMachineFactory
         _amountToBuildBase = amountToBuildBase;
     }
 
-    public StateMachine<BaseState, BaseTransition> Create()
+    public StateMachine Create()
     {
         BotsBase botsBase = _storage.BotsBaseInfo;
         ResourcesBaseWallet wallet = _storage.Wallet;
@@ -43,6 +43,6 @@ public class BaseStateMachineFactory
 
         prioritySetterState.AddTransition(fromPrioritySetterToIdleTransition);
 
-        return new StateMachine<BaseState, BaseTransition>(idleState);
+        return new StateMachine(idleState);
     }
 }

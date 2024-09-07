@@ -2,19 +2,18 @@
 
 namespace BasicStateMachine
 {
-    public abstract class Transition<TState, TTransition> where TState : State<TState, TTransition>
-        where TTransition : Transition<TState, TTransition>
+    public abstract class Transition
     {
-        private readonly TState _nextState;
+        private readonly State _nextState;
 
         private bool _isOpen;
 
-        public Transition(TState nextState) =>
+        public Transition(State nextState) =>
             _nextState = nextState ?? throw new ArgumentNullException(nameof(nextState));
 
         public abstract void Update();
 
-        public bool TryGetNextState(out TState nextState)
+        public bool TryGetNextState(out State nextState)
         {
             nextState = _isOpen ? _nextState : null;
 
