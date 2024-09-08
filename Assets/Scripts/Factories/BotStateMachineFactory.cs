@@ -27,7 +27,7 @@ public class BotStateMachineFactory
 
     public StateMachine Create()
     {
-        BotIdleState idleState = new(_entity, _botsBaseInfoOwner);
+        BotIdleState idleState = new(_entity, _mover, _botsBaseInfoOwner);
         BotMoveToTargetState moveToTargetState = new(_entity, _mover);
         BotInteractState interactState = new(_entity, _interactor);
         BotSettingBaseWalletTargetState settingBaseWalletTargetState = new(_entity, _baseWalletInfoOwner);
